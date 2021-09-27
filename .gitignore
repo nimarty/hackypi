@@ -1,3 +1,4 @@
 poky/
 meta-openembedded/
 meta-raspberrypi/
+build/
