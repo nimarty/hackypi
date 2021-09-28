@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # general config
 PROJECT_PATH="$PWD"
 

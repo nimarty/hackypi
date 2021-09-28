@@ -1,3 +1,4 @@
+![example workflow](https://github.com/nimarty/hackypi/actions/workflows/main.yml/badge.svg)
 # How to build
 1. `./setup.sh`
 1. `source poky/oe-init-build-env`
