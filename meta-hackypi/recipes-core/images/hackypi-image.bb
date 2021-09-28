@@ -13,12 +13,14 @@ LICENSE = "MIT"
 IMAGE_ROOTFS_SIZE ?= "8192"
 IMAGE_ROOTFS_EXTRA_SPACE_append = "${@bb.utils.contains("DISTRO_FEATURES", "systemd", " + 4096", "" ,d)}"
 
-EXTRA_IMAGE_FEATURES = " \
+EXTRA_IMAGE_FEATURES = "\
 	ssh-server-dropbear \
+	package-management \
 "
 
 IMAGE_INSTALL += " \
 	dhcpcd \
+	opkg \
 	"
 
 EXTRA_USERS_PARAMS = "\
