@@ -1,0 +1,36 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides: webserverapp
+# Required-Start:
+# Required-Stop:
+# Default-Start: 2 3 4 5
+# Default-Stop: 1
+# Short-Description: a vulnerable application
+### END INIT INFO
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+NAME=
+DESC=""
+PIDFILE=/var/run/webserverapp.pid
+case "$1" in
+start)
+echo -n "Starting $DESC: "
+# do what needs to be done to start your application in the background
+echo "$NAME."
+;;
+stop)
+echo -n "Stopping $DESC: "
+# do what needs to be done to stop your application in the background
+echo "$NAME."
+;;
+restart|force-reload)
+echo -n "Restarting $DESC: "
+# do what needs to be done to restart your application in the background
+echo "$NAME."
+;;
+*)
+N=/etc/init.d/$NAME
+echo "Usage: $N {start|stop|restart|force-reload}" >&2
+exit 1
+;;
+esac
+exit 0
