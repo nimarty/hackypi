@@ -20,4 +20,4 @@ popd
 
 
 # build minimal image
-bitbake core-image-minimal
+# bitbake core-image-minimal
