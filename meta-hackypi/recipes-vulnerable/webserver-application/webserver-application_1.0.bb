@@ -1,7 +1,3 @@
-# Recipe created by recipetool
-# This is the basis of a recipe and may need further editing in order to be fully functional.
-# (Feel free to remove these comments when editing.)
-
 # Unable to find any files that looked like license statements. Check the accompanying
 # documentation and source headers and set LICENSE and LIC_FILES_CHKSUM accordingly.
 #
@@ -12,15 +8,15 @@
 LICENSE = "CLOSED"
 LIC_FILES_CHKSUM = ""
 
-inherit pkgconfig
+inherit pkgconfig update-rc.d
 
-# No information for SRC_URI yet (only an external source tree was specified)
 SRC_URI = "\
 	file://webserver.py \
 	file://webserver.service \
 	"
 
-# NOTE: no Makefile found, unable to determine what needs to be done
+INITSCRIPT_PARAMS = "start 02 2 3 4 5 . stop 01 0 1 6 ."
+INITSCRIPT_NAME = "webserver.service"
 
 do_configure () {
 	# Specify any needed configure commands here
@@ -33,9 +29,13 @@ do_compile () {
 }
 
 do_install () {
-	# Specify install commands here
+	# install application
 	install -d ${D}${base_prefix}/opt/webserver/
 	install -m 0755 ${WORKDIR}/webserver.py ${D}${base_prefix}/opt/webserver/
+
+	# install init.d service
+	install -d ${D}${sysconfdir}/init.d/
+	install -m 0755 ${WORKDIR}/webserver.service ${D}${base_prefix}${sysconfdir}/init.d/*
 }
 
 
@@ -45,5 +45,7 @@ RDEPENDS_${PN} = "\
 	python3-flask-restful \
 	"
 
-FILES_${PN} = "${base_prefix}/opt/*"
-
+FILES_${PN} = "\
+	${base_prefix}/opt/* \
+	${base_prefix}${sysconfdir}/init.d/* \
+	"

@@ -12,22 +12,27 @@ NAME=
 DESC=""
 PIDFILE=/var/run/webserverapp.pid
 case "$1" in
-start)
+  start)
 echo -n "Starting $DESC: "
 # do what needs to be done to start your application in the background
-echo "$NAME."
+python3 /opt/webserver/weberver.py &
+echo $! > $PIDFILE
 ;;
-stop)
+  stop)
 echo -n "Stopping $DESC: "
 # do what needs to be done to stop your application in the background
-echo "$NAME."
+kill -9 $(cat $PIDFILE)
+echo -n > $PIDFILE
 ;;
-restart|force-reload)
+  restart|force-reload)
 echo -n "Restarting $DESC: "
 # do what needs to be done to restart your application in the background
-echo "$NAME."
+kill -9 $(cat $PIDFILE)
+echo -n > $PIDFILE
+python3 /opt/webserver/weberver.py &
+echo $! > $PIDFILE
 ;;
-*)
+  *)
 N=/etc/init.d/$NAME
 echo "Usage: $N {start|stop|restart|force-reload}" >&2
 exit 1
