@@ -1,6 +1,7 @@
 SUMMARY = "hackypi image with vulnerabilities to exploit"
 
 inherit core-image
+inherit extrausers
 
 IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
 
@@ -18,5 +19,12 @@ EXTRA_IMAGE_FEATURES = " \
 
 IMAGE_INSTALL += " \
 	dhcpcd \
-	myusers \
 	"
+
+EXTRA_USERS_PARAMS = "\
+	usermod -p '\$1\$1HfuVw8b\$TWHOrpnNLsyXteoXRLiPt0' root; \
+	useradd -u 1200 -m -d /home/hacky -r -s /bin/sh -p '\$1\$wixRgy/g\$RKBIS5HFghq4CNu3ykD2j1' hacky; \
+	groupadd -g 880 hackygroup; \
+	usermod -a -G hackygroup hacky; \
+	"
+
