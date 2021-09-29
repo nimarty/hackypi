@@ -33,13 +33,10 @@ jobs:
       - name: Bitbake
         shell: bash
         run: |
-          mkdir -p build/tmp/deploy/images/raspberrypi4/
-          cd build/tmp/deploy/images/raspberrypi4/
-          echo "build artifact" > hackypi-image-raspberrypi4-123456789.rpi-sdimg
-          # bash setup.sh
-          # source poky/oe-init-build-env
-          # bitbake hackypi-image
-          # bitbake webserver-application
+          bash setup.sh
+          source poky/oe-init-build-env
+          bitbake hackypi-image
+          bitbake webserver-application
 
       - name: Remove Old Artifacts
         uses: c-hive/gha-remove-artifacts@v1
