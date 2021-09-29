@@ -36,7 +36,6 @@ jobs:
           bash setup.sh
           source poky/oe-init-build-env
           bitbake hackypi-image
-          bitbake webserver-application
 
       - name: Remove Old Artifacts
         uses: c-hive/gha-remove-artifacts@v1
