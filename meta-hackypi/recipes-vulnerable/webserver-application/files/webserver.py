@@ -2,12 +2,13 @@
 
 import time
 
-from flask import Flask, request
-from flask_restful import Resource, Api
+from flask import Flask, request, url_for
+from flask_restful import Resource, Api, reqparse
 from flask import jsonify, make_response, render_template
-import random
 
-print("""REST server providing temperature and pressure, based on random values.
+from subprocess import PIPE, run
+
+print("""REST server providing system logs.
 
 Press Ctrl+C to exit
 
@@ -17,25 +18,28 @@ Press Ctrl+C to exit
 app = Flask(__name__)
 api = Api(app)
 
-class Temperature(Resource):
+class Logs(Resource):
     def get(self):
-        result = {'temperature': '{0:.2f} C'.format(random.random()*30)}
-        return jsonify(result)
-
-class Pressure(Resource):
-    def get(self):
-        result = {'pressure': '{0:.2f} hPa'.format(random.random()*30+990)}
-        return jsonify(result)
+        headers = {'Content-Type': 'text/plain'}
+        parser = reqparse.RequestParser()
+        parser.add_argument('filepath', type=str, required=True,
+            help="filepath cannot be blank!")
+        params = parser.parse_args()
+        command = ['cat', params['filepath']]
+        result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
+        return make_response(result.stdout, 200, headers)
 
 class Index(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         # render_template('index.html')
-        return make_response("<h1>Hello World</h1>",200,headers)
+        logsurl = url_for('logs', _external=True)
+        logsurl += '?filepath=/var/log/messages'
+        html = '<h1>Logserver</h1><a href="{}"/>Show Logs</a>'.format(logsurl)
+        return make_response(html, 200, headers)
 
-api.add_resource(Temperature, '/temperature') # Route_1
-api.add_resource(Pressure, '/pressure') # Route_2
+api.add_resource(Logs, '/logs') # Route_1
 api.add_resource(Index, '/')
 
 if __name__ == '__main__':
-     app.run(port='5000', host='0.0.0.0')
+     app.run(port='8088', host='0.0.0.0')
