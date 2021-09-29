@@ -12,11 +12,11 @@ inherit pkgconfig update-rc.d
 
 SRC_URI = "\
 	file://webserver.py \
-	file://webserver.service \
+	file://webserver \
 	"
 
 INITSCRIPT_PARAMS = "start 02 2 3 4 5 . stop 01 0 1 6 ."
-INITSCRIPT_NAME = "webserver.service"
+INITSCRIPT_NAME = "webserver"
 
 do_configure () {
 	# Specify any needed configure commands here
@@ -34,13 +34,12 @@ do_install () {
 	install -m 0755 ${WORKDIR}/webserver.py ${D}${base_prefix}/opt/webserver/
 
 	# install init.d service
-	install -d ${D}${sysconfdir}/init.d/
-	install -m 0755 ${WORKDIR}/webserver.service ${D}${base_prefix}${sysconfdir}/init.d/*
+	install -d ${D}${base_prefix}${sysconfdir}/init.d/
+	install -m 0755 ${WORKDIR}/webserver ${D}${base_prefix}${sysconfdir}/init.d/
 }
 
 
 RDEPENDS_${PN} = "\
-	python3-smbus \
 	python3-flask \
 	python3-flask-restful \
 	"

@@ -15,7 +15,7 @@ case "$1" in
   start)
 echo -n "Starting $DESC: "
 # do what needs to be done to start your application in the background
-python3 /opt/webserver/weberver.py &
+python3 /opt/webserver/webserver.py &
 echo $! > $PIDFILE
 ;;
   stop)
@@ -29,7 +29,7 @@ echo -n "Restarting $DESC: "
 # do what needs to be done to restart your application in the background
 kill -9 $(cat $PIDFILE)
 echo -n > $PIDFILE
-python3 /opt/webserver/weberver.py &
+python3 /opt/webserver/webserver.py &
 echo $! > $PIDFILE
 ;;
   *)
