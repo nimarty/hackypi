@@ -30,15 +30,15 @@ case "$1" in
     echo "done."
     ;;
   stop)
-    echo "Stopping $DESC: "
+    echo -n "Stopping $DESC: "
     stop_process
-    echo "."
+    echo "done."
     ;;
   restart|force-reload)
-    echo "Restarting $DESC: "
+    echo -n "Restarting $DESC: "
     stop_process
     start_process
-    echo "."
+    echo "done."
     ;;
   *)
     N=/etc/init.d/$NAME

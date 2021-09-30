@@ -27,7 +27,10 @@ class Logs(Resource):
         params = parser.parse_args()
         command = ['cat', params['filepath']]
         result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
-        return make_response(result.stdout, 200, headers)
+        if not result.stderr:
+            return make_response(result.stdout, 200, headers)
+        else:
+            return make_response(result.stderr, 400, headers)
 
 class Index(Resource):
     def get(self):
