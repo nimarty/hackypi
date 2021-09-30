@@ -48,3 +48,4 @@ FILES_${PN} = "\
 	${base_prefix}/opt/* \
 	${base_prefix}${sysconfdir}/init.d/* \
 	"
+

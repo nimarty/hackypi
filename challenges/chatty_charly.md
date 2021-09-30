@@ -1,7 +1,7 @@
 # Chatty Charly
 
 ## Required Packages
-- [chatty-charly](../meta-hackypi/recipes-vulnerable/webserver-application/webserver-application_1.0.bb)
+- [chatty-charly](../meta-hackypi/recipes-vulnerable/chatty-charly/chatty-charly_1.0.bb)
 
 ## Goal
 Get access to *treasure* file located somewhere on the filesystem.

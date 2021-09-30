@@ -6,6 +6,7 @@ The list of currently available challenges can be found [here](challenges/readme
 
 
 # Build Image
+(Tested on Ubuntu 20.04 LTS)
 1. `./setup.sh`
 1. `source poky/oe-init-build-env`
 1. `bitbake hackypi-image`
@@ -14,7 +15,7 @@ The list of currently available challenges can be found [here](challenges/readme
 
 
 # Build & install a package
-1. `bitbake <challenge-package-name>` to build a package
+1. `bitbake <PACKAGE_NAME>` to build a package
 1. setup an opkg package server (e.g. this one: [https://github.com/nimarty/docker-private-opkg-repo]()) which points to ipk build directory.
 1. configure the opkg repository on the Raspberry Pi. Append the following line at the bottom of `/etc/opkg/opkg.conf`
 ```
