@@ -27,7 +27,7 @@ jobs:
         id: cache-bitbake
         uses: actions/cache@v2
         with:
-          path: build
+          path: build/downloads
           key: ${{ runner.os }}-bitbake-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-bitbake-
@@ -38,6 +38,7 @@ jobs:
           bash setup.sh
           source poky/oe-init-build-env
           bitbake hackypi-image
+          bitbake chatty-charly
 
       - name: Remove Old Artifacts
         uses: c-hive/gha-remove-artifacts@v1
@@ -47,6 +48,7 @@ jobs:
       - name: Archive New Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: hackypi-image
+          name: security-challenge-package
           path: |
             build/tmp/deploy/images/raspberrypi4/hackypi-image-raspberrypi4-*.rpi-sdimg
+            build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/chatty-charly_*.ipk
