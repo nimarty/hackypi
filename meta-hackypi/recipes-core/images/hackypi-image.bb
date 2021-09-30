@@ -16,7 +16,7 @@ IMAGE_ROOTFS_EXTRA_SPACE_append = "${@bb.utils.contains("DISTRO_FEATURES", "syst
 
 # add features, packages and users
 EXTRA_IMAGE_FEATURES = "\
-	ssh-server-dropbear \
+	ssh-server-openssh \
 	package-management \
 	"
 
