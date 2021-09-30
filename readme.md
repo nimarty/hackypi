@@ -16,7 +16,7 @@ The list of currently available challenges can be found [here](challenges/readme
 
 # Build & install a package
 1. `bitbake <PACKAGE_NAME>` to build a package
-1. setup an opkg package server (e.g. this one: [https://github.com/nimarty/docker-private-opkg-repo]()) which points to ipk build directory.
+1. setup an opkg package server (e.g. this one: <https://github.com/nimarty/docker-private-opkg-repo>) which points to ipk build directory.
 1. configure the opkg repository on the Raspberry Pi. Append the following line at the bottom of `/etc/opkg/opkg.conf`
 ```
 src/gz hackypackages http://<SERVER_URL>:<PORT>
