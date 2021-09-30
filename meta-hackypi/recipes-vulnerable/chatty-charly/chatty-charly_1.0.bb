@@ -11,16 +11,6 @@ SRC_URI = "\
 INITSCRIPT_PARAMS = "start 02 2 3 4 5 . stop 01 0 1 6 ."
 INITSCRIPT_NAME = "webserver"
 
-do_configure () {
-	# Specify any needed configure commands here
-	:
-}
-
-do_compile () {
-	# Specify compilation commands here
-	:
-}
-
 do_install () {
 	# install application
 	install -d ${D}${base_prefix}/opt/webserver/
