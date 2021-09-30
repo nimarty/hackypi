@@ -5,7 +5,7 @@ name: Build
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: '0 2 * * *' # run at 2 AM UTC
+    - cron: '0 0 1 * *' # at 00:00 on the first day of the month
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -28,7 +28,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: build
-          key: ${{ runner.os }}-bitbake-build-output
+          key: ${{ runner.os }}-bitbake-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-bitbake-
 
       - name: Bitbake
         shell: bash
