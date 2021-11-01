@@ -7,9 +7,6 @@ inherit core-image extrausers
 # enable sd card image build
 IMAGE_FSTYPES = "tar.xz ext3 rpi-sdimg"
 
-# enable uart
-ENABLE_UART= "1"
-
 # from core-minimal-image
 IMAGE_ROOTFS_SIZE ?= "8192"
 IMAGE_ROOTFS_EXTRA_SPACE_append = "${@bb.utils.contains("DISTRO_FEATURES", "systemd", " + 4096", "" ,d)}"
