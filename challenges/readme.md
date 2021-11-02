@@ -1,2 +1,3 @@
 # Challenges
-- [chatty_charly](chatty_charly.md)
+- chatty-charly
+- relaxed-rachel
