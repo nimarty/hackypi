@@ -39,6 +39,7 @@ jobs:
           source poky/oe-init-build-env
           bitbake hackypi-image
           bitbake chatty-charly
+          bitbake relaxed-rachel
 
       - name: Remove Old Artifacts
         uses: c-hive/gha-remove-artifacts@v1
@@ -52,3 +53,4 @@ jobs:
           path: |
             build/tmp/deploy/images/raspberrypi4/hackypi-image-raspberrypi4-*.rpi-sdimg
             build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/chatty-charly_*.ipk
+            build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/relaxed-rachel_*.ipk

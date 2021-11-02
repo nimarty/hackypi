@@ -1,6 +1,6 @@
 # Hacky Pi :robot:
 This project is about providing a minimal Raspberry Pi image with opkg support which enables a user to install various **security challenge packages**.
-The list of currently available challenges can be found [here](challenges/readme.md).
+The handout for the currently available challenges can be found [here](https://github.com/nimarty/hackypi-handout).
 
 ![Build Workflow](https://github.com/nimarty/hackypi/actions/workflows/main.yml/badge.svg)
 

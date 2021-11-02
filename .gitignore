@@ -1,4 +1,5 @@
-poky/
+.vscode/
+build/
 meta-openembedded/
 meta-raspberrypi/
-build/
+poky/
