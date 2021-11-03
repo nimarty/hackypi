@@ -4,25 +4,25 @@ The handout for the currently available challenges can be found [here](https://g
 
 ![Build Workflow](https://github.com/nimarty/hackypi/actions/workflows/main.yml/badge.svg)
 
-
 # Build Image
-(Tested on Ubuntu 20.04 LTS)
+Following steps have been tested on Ubuntu 20.04 LTS. When using a virtual machine, make sure to have at least 2 CPUs and 50 GB disk space at your disposal. Anyways, the first BitBake build takes a while.
 1. `./setup.sh`
 1. `source poky/oe-init-build-env`
 1. `bitbake hackypi-image`
-1. take `xxx.rpi-sdimg` from `build/tmp/deploy/images/raspberrypi4/` and write it to SD card
-1. startup Raspberry Pi and connect via UART or SSH
-
+1. take `<xxx>.rpi-sdimg` from `build/tmp/deploy/images/raspberrypi4/` and write it to an SD card
+    1. `sudo fdisk -l | grep /dev/sd` to determine device
+    1. `sudo dd if=<xxx>.rpi-sdimg of=/dev/sd<x> bs=4M` to write image on device
+1. startup Raspberry Pi and connect via UART or SSHs
 
 # Build & install a package
 1. `bitbake <PACKAGE_NAME>` to build a package
-1. setup an opkg package server (e.g. this one: <https://github.com/nimarty/docker-private-opkg-repo>) which points to ipk build directory.
+1. setup an opkg package server (e.g. this one: <https://github.com/nimarty/docker-private-opkg-repo>) which points to the ipk build directory.
 1. configure the opkg repository on the Raspberry Pi. Change the following line at the bottom of `/etc/opkg/opkg.conf`
 ```
 src/gz hackypackages http://<SERVER_URL>:<PORT>
 ```
 1. run `opkg update` to update local package list
-1. run `opkg install <PACKAGE_NAME>` to install a package
+1. run `opkg install <PACKAGE_NAME> &> /dev/null` to install a package
 
 # Network Setup
 
