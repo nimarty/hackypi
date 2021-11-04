@@ -24,6 +24,7 @@ src/gz hackypackages http://<SERVER_URL>:<PORT>
 1. run `opkg update` to update local package list
 1. run `opkg install <PACKAGE_NAME>` to install a package
 
+
 # Network Setup
 
 ![Network Setup](res/security_challenge_network_setup.png)
