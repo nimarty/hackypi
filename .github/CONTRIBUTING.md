@@ -6,22 +6,22 @@ First of all many thanks for your interest in contributing to Hacky Pi. We need 
 If you discover undesired behavior, report the bug that contributors can fix it. But first make sure that you cannot find a related issue on GitHub. If a similar issue is still open, rather comment on that instead of creating a new one. If you find a closed issue that matches, mention it in your report. Otherwise, we encourage you to open a totally new issue with the bug label. Provide a meaningful title to identify the problem. Also, describe the exact steps with explanations for reproduction. What is the behavior you observed and what behavior was expected? Round off the report with screenshots if necessary. The community will then take care of this bug.
 
 
-## Suggesting Enhancements
-Similarly to reporting bugs, you can also suggest enhancements to the repository. An enhancement can be a proposal for a new challenge or an improvement to the existing codebase. Follow the same process as before but mark the issue with the enhancement label.
+## Suggesting Enhancements and Features
+Similarly to reporting bugs, you can also suggest enhancements and features to the repository. An enhancement is an improvement to the existing codebase, whereas a feature is a proposal for a new challenge. Follow the same process as before but mark the issue with the corresponding label.
 
 
 ## Branching / Pull Request Concept
-Branch names should be meaningful and user-friendly to read. Therefore, we suggest following schema: *\<prefix\>-\<#issue\>-\<description\>*
+Branch names should be meaningful and user-friendly to read. We propose to use following schemas based on the work you intend to do. Use hyphens as delimiter in your description if multiple words are required.
 
-- Prefix is either *bugfix* or *feature* for enhancements and new challenges.
-- Issue number is available on GitHub.
-- Description should be short and use hyphens as delimiter if multiple words are required.
+- *bugfix/\<description\>*
+- *enhancement/\<description\>*
+- *feature/\<challenge-name\>*
 
-After the work on the branch is done and pushed, a pull request needs to be created. This enables the community to discuss on the code and the maintainer to approve and merge into the main branch if everything is okay.
+After the work on the branch is done and pushed, a pull request needs to be created. Request a review from a developer that has already contributed a challenge to Hacky Pi. The reviewer then checks the code and gives feedback. If everything is approved, the changes are merged into the main branch and you can now also be considered as a reviewer for a future challenge. Welcome to the community!
 
 
 ## Creating Challenges
-We encourage training participants and other community members to create new challenges based on enhancement issues or own ideas. This helps internalizing security problems and also learning some Yocto.
+We encourage training participants and other community members to create new challenges based on feature issues or own ideas. This helps internalizing security problems and also learning some Yocto. To make the challenges more interesting, think of examples that occur or have occurred in real-life projects.
 
 1. Pick a random challenge title that does not give a hint for the solution. Usually, we choose an adjective and a personal name, e.g. *mad-margrethe*.
 1. Create a folder for your challenge in the custom Yocto layer like *meta-hackypi/recipes-vulnerable/\<challenge-name\>*.
