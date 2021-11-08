@@ -1,6 +1,8 @@
 # How to contribute to Hacky Pi
 First of all many thanks for your interest in contributing to Hacky Pi. We need you in order to keep this training up-to-date with current security challenges in embedded systems projects. :+1::tada:
 
+Please also read our [code of conduct](CODE_OF_CONDUCT.md) before start contributing.
+
 
 ## Reporting Bugs
 If you discover undesired behavior, report the bug that contributors can fix it. But first make sure that you cannot find a related issue on GitHub. If a similar issue is still open, rather comment on that instead of creating a new one. If you find a closed issue that matches, mention it in your report. Otherwise, we encourage you to open a totally new issue with the bug label. Provide a meaningful title to identify the problem. Also, describe the exact steps with explanations for reproduction. What is the behavior you observed and what behavior was expected? Round off the report with screenshots if necessary. The community will then take care of this bug.

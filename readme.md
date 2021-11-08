@@ -3,6 +3,7 @@ This project is about providing a minimal Raspberry Pi image with opkg support w
 The handout for the currently available challenges can be found [here](https://github.com/nimarty/hackypi-handout).
 
 ![Build Workflow](https://github.com/nimarty/hackypi/actions/workflows/main.yml/badge.svg)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](.github/CODE_OF_CONDUCT.md)
 
 # Build Image
 Following steps have been tested on Ubuntu 20.04 LTS. When using a virtual machine, make sure to have at least 2 CPUs and 50 GB disk space at your disposal. Anyways, the first BitBake build takes a while.
@@ -34,4 +35,4 @@ src/gz hackypackages http://<SERVER_URL>:<PORT>
 - The Attacker tries to solve the challenge
 
 # Contribute
-If you want to help making this project even better, please read the [contribution guideline](.github/CONTRIBUTING.md) and start coding. Thanks in advance for your contribution!
+If you want to help making this project even better, please read the [contribution guideline](.github/CONTRIBUTING.md) and our [code of conduct](.github/CODE_OF_CONDUCT.md), and start coding. Thanks in advance for your contribution!
