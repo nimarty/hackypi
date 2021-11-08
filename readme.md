@@ -25,13 +25,27 @@ src/gz hackypackages http://<SERVER_URL>:<PORT>
 1. run `opkg install <PACKAGE_NAME> &> /dev/null` to install a package
 
 
-# Network Setup
-
+# General Usage
 ![Network Setup](res/security_challenge_network_setup.png)
 
 - Hacky Pi, Package Server and Attacker's/Admin's computer have to be in the same LAN
 - The Admin configures the Hacky Pi by installing packages
 - The Attacker tries to solve the challenge
+
+
+## Use Case - Self Education
+- Admin and Attacker are the same person
+- Package Server can be hosted on the client computer itself
+- As an admin, install the desired security challenge
+- As an attacker, Try to solve the challenge afterwards
+- It is self explanatory to not read through the source code in this case
+
+## Use Case - Moderated Training
+- The training moderator acts as the admin and installs security challenge packages on the participants' hardware
+- The participants act as attackers and try to solve the challenge
+- Each participant gets his own Raspberry Pi
+- Requires Network Setup with a DHCP Server and Package Server
+- The moderator gives hints if necessary and explains the vulnerabilites in more detail (see handout repository)
 
 # Contribute
 If you want to help making this project even better, please read the [contribution guideline](.github/CONTRIBUTING.md) and start coding. Thanks in advance for your contribution!
