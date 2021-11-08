@@ -35,7 +35,7 @@ src/gz hackypackages http://<SERVER_URL>:<PORT>
 
 ## Use Case - Self Education
 - Admin and Attacker are the same person
-- Package Server can be hosted on the client computer itself
+- Package Server can be hosted on the Admin/Attacker computer itself
 - As an admin, install the desired security challenge
 - As an attacker, Try to solve the challenge afterwards
 - It is self explanatory to not read through the source code in this case
