@@ -24,6 +24,7 @@ src/gz hackypackages http://<SERVER_URL>:<PORT>
 1. run `opkg update` to update local package list
 1. run `opkg install <PACKAGE_NAME> &> /dev/null` to install a package
 
+
 # Network Setup
 
 ![Network Setup](res/security_challenge_network_setup.png)
@@ -31,3 +32,6 @@ src/gz hackypackages http://<SERVER_URL>:<PORT>
 - Hacky Pi, Package Server and Attacker's/Admin's computer have to be in the same LAN
 - The Admin configures the Hacky Pi by installing packages
 - The Attacker tries to solve the challenge
+
+# Contribute
+If you want to help making this project even better, please read the [contribution guideline](.github/CONTRIBUTING.md) and start coding. Thanks in advance for your contribution!
