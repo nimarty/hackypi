@@ -10,10 +10,10 @@ Following steps have been tested on Ubuntu 20.04 LTS. When using a virtual machi
 1. `./setup.sh`
 1. `source poky/oe-init-build-env`
 1. `bitbake hackypi-image`
-1. take `<xxx>.rpi-sdimg` from `build/tmp/deploy/images/raspberrypi4/` and write it to an SD card
-    1. `sudo fdisk -l | grep /dev/sd` to determine device
-    1. `sudo dd if=<xxx>.rpi-sdimg of=/dev/sd<x> bs=4M` to write image on device
-1. startup Raspberry Pi and connect via UART or SSH
+1. Take `<xxx>.rpi-sdimg` from `build/tmp/deploy/images/raspberrypi4/` and write it to an SD card.
+    1. `sudo fdisk -l | grep /dev/sd` to determine device.
+    1. `sudo dd if=<xxx>.rpi-sdimg of=/dev/sd<x> bs=4M` to write image on device.
+1. Start up Raspberry Pi and connect via UART or SSH. First startup takes time as filesystem is expanded to available memory space (up to 5 minutes for a 16GB SD card).
 
 # Build & install a package
 1. `bitbake <PACKAGE_NAME>` to build a package
