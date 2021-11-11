@@ -45,6 +45,7 @@ pkg_postrm_${PN} () {
 RDEPENDS_${PN} = " \
     python3-flask \
     python3-flask-restful \
+    python3-six \
     "
 
 FILES_${PN} = " \
