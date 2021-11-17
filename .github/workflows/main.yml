@@ -38,6 +38,7 @@ jobs:
           bash setup.sh
           source poky/oe-init-build-env
           bitbake hackypi-image
+          MACHINE=raspberrypi3 bitbake hackypi-image
           bitbake chatty-charly
           bitbake relaxed-rachel
 
@@ -52,5 +53,6 @@ jobs:
           name: security-challenge-package
           path: |
             build/tmp/deploy/images/raspberrypi4/hackypi-image-raspberrypi4-*.rpi-sdimg
+            build/tmp/deploy/images/raspberrypi3/hackypi-image-raspberrypi3-*.rpi-sdimg
             build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/chatty-charly_*.ipk
             build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/relaxed-rachel_*.ipk
