@@ -56,5 +56,6 @@ RDEPENDS_${PN} = " \
 
 FILES_${PN} = " \
     ${base_prefix}/usr/bin/* \
+    ${base_prefix}/usr/lib/* \
     ${base_prefix}${sysconfdir}/init.d/* \
     "
