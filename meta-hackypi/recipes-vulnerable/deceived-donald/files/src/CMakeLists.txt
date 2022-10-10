@@ -5,3 +5,5 @@ project(memlog)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(memlog main.cpp)
+
+install(TARGETS memlog DESTINATION /usr/bin)
