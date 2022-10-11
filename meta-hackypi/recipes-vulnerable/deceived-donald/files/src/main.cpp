@@ -24,7 +24,6 @@ bool strToInt(char* str, int& result) {
    if (*p != '\0' || errno != 0) {
       return false;
    }
-
    if (arg < MS_MIN || arg > INT_MAX) {
       return false;
    }
