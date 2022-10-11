@@ -1,13 +1,26 @@
 #include "memfunctions.h"
 
+#include <chrono>
+#include <cstring>
+#include <future>
 #include <iostream>
+#include <thread>
 
-int main()
+using namespace std::chrono_literals;
+
+int main(int argc, char *argv[])
 {
-   using std::cout;
-   using std::endl;
-
-   double vm, rss;
-   MemFunctions::process_mem_usage(vm, rss);
-   cout << "VM: " << vm << "; RSS: " << rss << endl;
+   if(argc == 2 && strcmp(argv[1],"c") == 0) {
+      
+      for(;;) {
+         std::future<long> result = std::async(std::launch::async, MemFunctions::system_mem_free);
+         long value = result.get();
+         std::cout << "free: " << value << std::endl;
+         std::this_thread::sleep_for(10000ms);
+      }
+   }
+   else {
+      long memFree = MemFunctions::system_mem_free();
+      std::cout << "free: " << memFree << std::endl;
+   }
 }
