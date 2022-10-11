@@ -1,11 +1,11 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides: Logserver
+# Provides: Memlog
 # Required-Start:
 # Required-Stop:
 # Default-Start: 2 3 4 5
 # Default-Stop: 1
-# Short-Description: a vulnerable application
+# Short-Description: periodic memory log
 ### END INIT INFO
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 NAME="memlog"
@@ -15,7 +15,7 @@ PIDFILE=/var/run/memlog.pid
 start_process() {
   touch $PIDFILE
   chmod a+w $PIDFILE
-  su -c "memlog c > $PIDFILE" root
+  su -c "memlog c & echo \$! > $PIDFILE" root
 }
 
 stop_process() {
