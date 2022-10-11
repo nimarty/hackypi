@@ -26,11 +26,19 @@ do_install () {
 }
 
 pkg_postinst_${PN} () {
-
+    useradd -p '$1$IebNOasl$pmPilB8C2b3wuax1tkha7/' donald
+    printf 'It does not matter how slowly you go so long as you do not stop.\n - Confucius\n' > /home/donald/treasure
+    chown root /home/donald/treasure
+    chmod 600 /home/donald/treasure
+    echo 'AllowUsers donald' >> /etc/ssh/sshd_config
+    /etc/init.d/sshd restart
 }
 
 pkg_postrm_${PN} () {
-
+    userdel -f donald
+    rm -rf /home/donald
+    sed -i '/AllowUsers donald/d' /etc/ssh/sshd_config
+    /etc/init.d/sshd restart
 }
 
 RDEPENDS_${PN} = " \
