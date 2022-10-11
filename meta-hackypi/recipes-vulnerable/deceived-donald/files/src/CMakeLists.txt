@@ -15,7 +15,7 @@ set_target_properties(memfunctions PROPERTIES VERSION 1.0.0 SOVERSION 1)
 
 add_executable(memlog main.cpp)
 
-target_link_libraries(memlog PRIVATE memfunctions)
+target_link_libraries(memlog PRIVATE memfunctions pthread)
 
 
 install(TARGETS memlog DESTINATION /usr/bin)

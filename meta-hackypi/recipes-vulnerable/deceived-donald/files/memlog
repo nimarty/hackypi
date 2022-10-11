@@ -15,7 +15,7 @@ PIDFILE=/var/run/memlog.pid
 start_process() {
   touch $PIDFILE
   chmod a+w $PIDFILE
-  #su -c "python3 /opt/webserver/webserver.py & echo \$! > $PIDFILE" webserveruser
+  su -c "memlog c > $PIDFILE" root
 }
 
 stop_process() {
