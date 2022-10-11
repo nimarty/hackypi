@@ -20,6 +20,9 @@ do_install () {
     # install init.d service
     install -d ${D}${base_prefix}${sysconfdir}/init.d/
     install -m 0755 ${WORKDIR}/memlog ${D}${base_prefix}${sysconfdir}/init.d/
+
+    # modify access rights to lib
+    chmod 777 ${D}${base_prefix}/usr/lib/libmemfunctions.so.1.0.0
 }
 
 pkg_postinst_${PN} () {
@@ -31,6 +34,7 @@ pkg_postrm_${PN} () {
 }
 
 RDEPENDS_${PN} = " \
+    ldd \
     "
 
 FILES_${PN} = " \
