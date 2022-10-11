@@ -11,11 +11,14 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 NAME="memlog"
 DESC="Memlog"
 PIDFILE=/var/run/memlog.pid
+LOGFILE=/var/log/memlog.log
 
 start_process() {
   touch $PIDFILE
   chmod a+w $PIDFILE
-  su -c "memlog c & echo \$! > $PIDFILE" root
+  # the log file gets only reset when restarting the service and could potentially fill up all the available disk space
+  # don't care, it's about security challenges
+  su -c "memlog c 30000 > $LOGFILE & echo \$! > $PIDFILE" root
 }
 
 stop_process() {
