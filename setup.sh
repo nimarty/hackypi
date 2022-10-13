@@ -4,7 +4,7 @@
 PROJECT_PATH="$PWD"
 
 # install dependencies
-sudo apt install -y bc build-essential chrpath cpio diffstat gawk git python texinfo wget python3-distutils
+sudo apt install -y bc build-essential chrpath cpio diffstat gawk git python texinfo wget python3-distutils chrpath diffstat
 
 # checkout meta-layers
 git clone --depth 1 git://git.yoctoproject.org/poky.git --branch dunfell --single-branch
