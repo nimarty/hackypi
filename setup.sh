@@ -19,7 +19,3 @@ pushd $PROJECT_PATH
 cp -rf conf/local.conf build/conf/local.conf
 cp -rf conf/bblayers.conf build/conf/bblayers.conf
 popd
-
-
-# build minimal image
-# bitbake core-image-minimal

@@ -1,4 +1,4 @@
-SUMMARY = "hackypi image with vulnerabilities to exploit"
+SUMMARY = "hackypi base image"
 IMAGE_LINGUAS = " "
 LICENSE = "MIT"
 
