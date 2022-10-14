@@ -15,7 +15,7 @@ on:
     inputs:
       enable_build_hackypi:
         type: boolean
-        description: 'Build Hacky Pi Image and challenges'
+        description: 'Build HackyPi image and challenges'
         default: true
       enable_build_tools:
         type: boolean
@@ -70,7 +70,7 @@ jobs:
           bitbake chatty-charly
           bitbake relaxed-rachel
 
-      - name: Archive New Artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v3.1.0
         with:
           name: security-challenge-package
@@ -102,7 +102,7 @@ jobs:
           cd tools/relaxed-rachel
           make all
 
-      - name: Archive New Artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v3.1.0
         with:
           name: security-challenge-package
