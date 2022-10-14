@@ -107,4 +107,4 @@ jobs:
         with:
           name: security-challenge-package
           path: |
-            tools/relaxed-rachel/build/**
+            tools/relaxed-rachel/build/
