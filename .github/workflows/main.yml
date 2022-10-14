@@ -100,7 +100,7 @@ jobs:
         shell: bash
         run: |
           cd tools/relaxed-rachel
-          make
+          make all
 
       - name: Archive New Artifacts
         uses: actions/upload-artifact@v3.1.0

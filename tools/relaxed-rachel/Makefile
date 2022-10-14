@@ -1,9 +1,9 @@
 CXX = g++
 CXXFLAGS = -Wall -Wextra
 
-all: client.cpp
+all: ftp_client.cpp
 	mkdir -p build
-	$(CXX) $(CXXFLAGS) -o build/client client.cpp
+	$(CXX) $(CXXFLAGS) -o build/ftp_client ftp_client.cpp
 
 clean:
-	$(RM) client
+	$(RM) build/ftp_client
