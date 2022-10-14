@@ -1,0 +1,1 @@
+Subprojects for additional tools are placed here. This includes programs required for challenges which do not run directly on Hacky Pi.
