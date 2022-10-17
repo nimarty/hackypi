@@ -1,4 +1,4 @@
-# Build and store HackyPi artifacts
+# Build and upload artifacts
 
 name: Build
 
@@ -12,13 +12,23 @@ on:
   #  - cron: '0 0 1 * *' # at 00:00 on the first day of the month
 
   workflow_dispatch:
+    inputs:
+      enable_build_hackypi:
+        type: boolean
+        description: 'Build HackyPi image and challenges'
+        default: true
+      enable_build_tools:
+        type: boolean
+        description: 'Build additional tools'
+        default: true
 
   pull_request:
     branches:
       - master
 
 jobs:
-  build:
+  build-hackypi:
+    if: ${{ github.event.inputs.enable_build_hackypi == 'true' || github.event.inputs.enable_build_hackypi == ''}}
     runs-on: ubuntu-22.04
 
     steps:
@@ -60,7 +70,7 @@ jobs:
           bitbake chatty-charly
           bitbake relaxed-rachel
 
-      - name: Archive New Artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v3.1.0
         with:
           name: security-challenge-package
@@ -75,3 +85,26 @@ jobs:
             !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-ptest*.ipk
             !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-syslog*.ipk
             !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-staticdev*.ipk
+
+  build-tools:
+    if: ${{ github.event.inputs.enable_build_tools == 'true' || github.event.inputs.enable_build_tools == ''}}
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Build Relaxed-Rachel FTP Client
+        shell: bash
+        run: |
+          cd tools/relaxed-rachel
+          make all
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: security-challenge-package
+          path: |
+            tools/relaxed-rachel/build/
