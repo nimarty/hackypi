@@ -69,6 +69,7 @@ jobs:
           source poky/oe-init-build-env &>/dev/null
           bitbake chatty-charly
           bitbake relaxed-rachel
+          bitbake deceived-donald
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3.1.0
