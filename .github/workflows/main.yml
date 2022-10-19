@@ -21,6 +21,10 @@ on:
         type: boolean
         description: 'Build additional tools'
         default: true
+      enable_build_docker-opkg-server:
+        type: boolean
+        description: 'Build opkg server docker image'
+        default: false
 
   pull_request:
     branches:
@@ -110,3 +114,28 @@ jobs:
           name: security-challenge-package
           path: |
             tools/relaxed-rachel/build/
+
+  build-opkg-server-docker:
+    if: ${{ github.event.inputs.enable_build_docker-opkg-server == 'true'}}
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Log in to ghcr
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: nimarty/opkg-server:latest
+
