@@ -4,14 +4,20 @@
 build_package_list()
 {
 	cd /packages
-	rm -rf Packages.gz
-	echo "Building package list"
-	find . -name Packages.gz -exec rm {} +
-	find . -name Packages.stamps -exec rm {} +
+        rm -f Packages.new.stamps
+        rm -f Packages.new.gz
+        rm -f Packages.new
 
-	/usr/bin/opkg-make-index . > Packages
-	gzip ./Packages
+	echo "Build new package list"
+	/usr/bin/opkg-make-index -p Packages.new .
 
+
+	echo "Update package list"
+        mv Packages.new Packages
+	mv Packages.new.gz Packages.gz
+	mv Packages.new.stamps Packages.stamps
+
+	echo "Update packages access permissions"
 	chmod -R 755 /packages
 }
 
