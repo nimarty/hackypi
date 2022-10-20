@@ -35,7 +35,7 @@
                 <br/>
                 <div style="font-family: sans-serif; color: blue; font-size: small">
                     But wait, there is more ...<br/>
-                    Can you use the code somewhere else?
+                    Maybe service people can use the code as well!
                 </div>
                 <br/>
             </td>
