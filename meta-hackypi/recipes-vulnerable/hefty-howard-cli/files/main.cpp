@@ -69,6 +69,9 @@ int main() {
   fread(expected_pin, 4, 1, f);
   expected_pin[4] = 0;
   fclose(f);
+
+  setuid(0);
+
   cout << "HEMS (Home Energy Management System) Service interface\n";
   cout << "======================================================\n";
   cout << '\n';
@@ -76,7 +79,9 @@ int main() {
   cout << "please identify yourself with\n";
   cout << "your PIN.\n";
   cout << '\n';
-  printf("%08x\n", unused);
+
+  printf("%08x\n\n", unused);
+
   while (true) {
     char pin[5];
     cout << "Enter PIN: ";
@@ -90,9 +95,7 @@ int main() {
   }
 }
 
-static char *command = "/bin/sh";
-
 void unused() {
-  setuid(0);
-  cout << command;
+  char* const x[] = {"cat", "/etc/flag", 0};
+  execv("/bin/busybox", x);
 }

@@ -22,6 +22,9 @@ pkg_postinst_${PN} () {
     
     echo "kernel.randomize_va_space = 0" >> /etc/sysctl.conf
     sysctl -p /etc/sysctl.conf
+
+    echo 4711 > /etc/flag
+    chmod 640 /etc/flag
 }
 
 pkg_postrm_${PN} () {
@@ -31,6 +34,8 @@ pkg_postrm_${PN} () {
 
     sed -i "s/kernel.randomize_va_space = 0//" /etc/sysctl.conf
     sysctl -p /etc/sysctl.conf
+
+    rm /etc/flag
 }
 
 RDEPENDS_${PN} = " \
