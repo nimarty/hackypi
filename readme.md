@@ -1,11 +1,49 @@
-# Hacky Pi :robot:
-This project is about providing a minimal Raspberry Pi image with opkg support which enables a user to install various **security challenge packages**.
-The handout for the currently available challenges can be found [here](https://github.com/nimarty/hackypi-handout).
-
+# <img src="res/hackypi_logo.png" width="150"> Hacky Pi 
 ![Build Workflow](https://github.com/nimarty/hackypi/actions/workflows/main.yml/badge.svg)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](.github/CODE_OF_CONDUCT.md)
 
-# Build Image
+HackyPi is a plattform to solve security challenges and train your cybersecurity skills. Because HackyPi is based on a RaspberryPi, it offers a new dimension for security challenges to address problems found specifically in embedded devices. To solve a challenge it may be required to use an insecure serial connection or do some hardware manipulation... Find it out! 
+
+> ℹ️ HackyPi is not some kind of device which allows you to attack other systems. It is a training platform.
+
+# Getting Started
+You will need a Host System to run the HackyPackages-Server (OPKG Server) and to attack HackyPi. HackyPi needs a network connection in order to work. It is suggested to connect HackyPi and the Host in an isolated network to prevent accidentally hacking the environment. 
+
+<img src="res/security_challenge_network_setup.png" width="400">
+
+## Setup HackyPi
+1. Download the latest release package from this repo
+1. Take `<xxx>.rpi-sdimg` from `images/raspberrypi4/` or `images/raspberrypi4/` and write it to an SD card.
+    1. Under Linux: `sudo fdisk -l | grep /dev/sd` to determine device.
+    1. Under Linux: `sudo dd if=<xxx>.rpi-sdimg of=/dev/sd<x> bs=4M` to write image on device.
+    1. or under Windows, use Rufus or Win32DiskImager to write the image to an SD Card
+1. Put the SD Card into your Raspberry Pi, connect it to your network and power it on
+
+> ℹ️ First startup takes time as filesystem is expanded to available memory space (up to 10 minutes for slow SD cards). Be patient.
+
+## Setup HackyPackages Server
+To install and start the server you need a Linux Host and docker. Windows is not currently supported.
+1. `git clone https://github.com/nimarty/hackypi`
+1. `cd hacykpi/tools/opkg-server`
+1. `docker-compose up -d`
+
+This will launch the package server and make it accessible through the port defined in the `.env` file
+
+## Install Security Challenges
+If the network is set up correctly, your HackyPi will get assigned an IP address. Look it up on your DHCP server.
+In order to install challenges, connect with SSH to HackyPi. To install packages you need to login as root.
+
+> ℹ️ It's not the idea to use the root user to directly solve a security challenge. This is no fun. Follow the challenge description for the best experience.
+
+1. `ssh root@<hackypi-ip-address>` 
+1. `vi /etc/opkg/opkg.conf` replace the Package Server URL with the IP address of your HackyPackages Server. This is only required once.
+1. `opkg update`
+1. `opkg install <challenge-name> &> /dev/null` and now you're ready to hack 🤖.
+1. `opkg remove --autoremove <challenge-name>` to remove the challenge from HackyPi
+
+A list of all available challenges with details can be found here: <https://github.com/nimarty/hackypi-handout>
+
+
+# Build Hacky Pi
 Following steps have been tested on Ubuntu 20.04 LTS. When using a virtual machine, make sure to have at least 2 CPUs and 50 GB disk space at your disposal. Anyways, the first BitBake build takes a while.
 1. `./setup.sh`
 1. `source poky/oe-init-build-env`
@@ -15,38 +53,7 @@ Following steps have been tested on Ubuntu 20.04 LTS. When using a virtual machi
     1. `sudo dd if=<xxx>.rpi-sdimg of=/dev/sd<x> bs=4M` to write image on device.
 1. Start up Raspberry Pi and connect via UART or SSH. First startup takes time as filesystem is expanded to available memory space (up to 5 minutes for a 16GB SD card).
 
-# Build & install a package
-1. `bitbake <PACKAGE_NAME>` to build a package
-1. setup an opkg package server (e.g. this one: <https://github.com/nimarty/docker-private-opkg-repo>) which points to the ipk build directory.
-1. configure the opkg repository on the Raspberry Pi. Change the following line at the bottom of `/etc/opkg/opkg.conf`
-```
-src/gz hackypackages http://<SERVER_URL>:<PORT>
-```
-1. run `opkg update` to update local package list
-1. run `opkg install <PACKAGE_NAME> &> /dev/null` to install a package
-
-
-# General Usage
-![Network Setup](res/security_challenge_network_setup.png)
-
-- Hacky Pi, Package Server and Attacker's/Admin's computer have to be in the same LAN
-- The Admin configures the Hacky Pi by installing packages
-- The Attacker tries to solve the challenge
-
-
-## Use Case - Self Education
-- Admin and Attacker are the same person
-- Package Server can be hosted on the Admin/Attacker computer itself
-- As an admin, install the desired security challenge
-- As an attacker, Try to solve the challenge afterwards
-- It is self explanatory to not read through the source code in this case
-
-## Use Case - Moderated Training
-- The training moderator acts as the admin and installs security challenge packages on the participants' hardware
-- The participants act as attackers and try to solve the challenge
-- Each participant gets his own Raspberry Pi
-- Requires Network Setup with a DHCP Server and Package Server
-- The moderator gives hints if necessary and explains the vulnerabilites in more detail (see handout repository)
-
 # Contribute
-If you want to help making this project even better, please read the [contribution guideline](.github/CONTRIBUTING.md) and our [code of conduct](.github/CODE_OF_CONDUCT.md), and start coding. Thanks in advance for your contribution!
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](.github/CODE_OF_CONDUCT.md)
+
+You're welcome to develop and add your own security challenge for HackyPi, please read the [contribution guideline](.github/CONTRIBUTING.md) and our [code of conduct](.github/CODE_OF_CONDUCT.md), and start coding.
