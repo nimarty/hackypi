@@ -2,8 +2,10 @@
 
 name: Build
 
-on:
+env:
+  DEFAULT_RUNNER: ubuntu-22.04
 
+on:
   push:
     branches:
       - master
@@ -24,7 +26,7 @@ on:
       hackypi_build_runner:
         type: string
         description: 'Runner to use for Build HackyPi job'
-        default: ubuntu-22.04
+        default: ${{ env.DEFAULT_RUNNER }}
 
   pull_request:
     branches:
@@ -33,7 +35,7 @@ on:
 jobs:
   build-hackypi:
     if: ${{ github.event.inputs.enable_build_hackypi == 'true' || github.event.inputs.enable_build_hackypi == ''}}
-    runs-on: ${{ github.event.inputs.hackypi_build_runner || 'ubuntu-22.04' }}
+    runs-on: ${{ github.event.inputs.hackypi_build_runner || env.DEFAULT_RUNNER }}
 
     steps:
       - name: Checkout
@@ -94,7 +96,7 @@ jobs:
 
   build-tools:
     if: ${{ github.event.inputs.enable_build_tools == 'true' || github.event.inputs.enable_build_tools == ''}}
-    runs-on: ubuntu-22.04
+    runs-on: ${{ env.DEFAULT_RUNNER }}
 
     steps:
       - name: Checkout
@@ -116,7 +118,7 @@ jobs:
             tools/relaxed-rachel/build/
     
   build-opkg-server-docker:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ env.DEFAULT_RUNNER }}
     needs: build-hackypi
 
     steps:
