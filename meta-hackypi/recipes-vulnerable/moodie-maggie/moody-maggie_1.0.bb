@@ -5,21 +5,27 @@ LIC_FILES_CHKSUM = ""
 
 RDEPENDS:${PN} = "netcat"
 
-inherit update-rc.d
+inherit cmake update-rc.d
 
 INITSCRIPT_NAME = "remote-shell.sh"
 INITSCRIPT_PARAMS = "start 99 5 . stop 00 0 6 ."
 
 SRC_URI = " \
+    file://src/ \
     file://${INITSCRIPT_NAME} \
     file://linpeas.sh \
 "
+
+S = "${WORKDIR}/src"
 
 FILES:${PN} += " \
     /home/admin \
 "
 
 do_install () {
+    install -d ${D}${bindir}
+    install -m 0755 moody-maggie ${D}${bindir}/
+
     install -d ${D}${sysconfdir}/init.d
     install -m 0755 ${WORKDIR}/${INITSCRIPT_NAME} ${D}${sysconfdir}/init.d/
 

