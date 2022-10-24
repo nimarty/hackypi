@@ -70,6 +70,7 @@ jobs:
           bitbake chatty-charly
           bitbake relaxed-rachel
           bitbake deceived-donald
+          bitbake moody-maggie
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3.1.0
