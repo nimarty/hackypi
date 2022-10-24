@@ -1,4 +1,4 @@
-# <img src="res/hackypi_logo.png" width="150"> Hacky Pi 
+# <img src="res/hackypi_logo.png" width="150"> HackyPi 
 ![Build Workflow](https://github.com/nimarty/hackypi/actions/workflows/main.yml/badge.svg)
 
 HackyPi is a plattform to solve security challenges and train your cybersecurity skills. Because HackyPi is based on a RaspberryPi, it offers a new dimension for security challenges to address problems found specifically in embedded devices. To solve a challenge it may be required to use an insecure serial connection or do some hardware manipulation... Find it out! 
@@ -6,9 +6,9 @@ HackyPi is a plattform to solve security challenges and train your cybersecurity
 > ℹ️ HackyPi is not some kind of device which allows you to attack other systems. It is a training platform.
 
 # Getting Started
-You will need a Host System to run the HackyPackages-Server (OPKG Server) and to attack HackyPi. HackyPi needs a network connection in order to work. It is suggested to connect HackyPi and the Host in an isolated network to prevent accidentally hacking the environment. 
+You will need a Host System to run the Hacky Packages Server (OPKG Server) and to attack HackyPi. HackyPi needs a network connection in order to work. It is suggested to connect HackyPi and the host in an isolated network to prevent accidentally hacking the environment. 
 
-<img src="res/security_challenge_network_setup.png" width="400">
+<img src="res/hackypi_deployment.png" width="600">
 
 ## Setup HackyPi
 1. Download the latest release package from this repo
@@ -20,13 +20,13 @@ You will need a Host System to run the HackyPackages-Server (OPKG Server) and to
 
 > ℹ️ First startup takes time as filesystem is expanded to available memory space (up to 10 minutes for slow SD cards). Be patient.
 
-## Setup HackyPackages Server
+## Setup Hacky Packages Server
 To install and start the server you need a Linux Host and docker. Windows is not currently supported.
 1. `git clone https://github.com/nimarty/hackypi`
 1. `cd hacykpi/tools/opkg-server`
 1. `docker-compose up -d`
 
-This will launch the package server and make it accessible through the port defined in the `.env` file
+This will automatically pull the docker image, launch the package server and make it accessible through the port defined in the `.env` file
 
 ## Install Security Challenges
 If the network is set up correctly, your HackyPi will get assigned an IP address. Look it up on your DHCP server.
@@ -35,7 +35,7 @@ In order to install challenges, connect with SSH to HackyPi. To install packages
 > ℹ️ It's not the idea to use the root user to directly solve a security challenge. This is no fun. Follow the challenge description for the best experience.
 
 1. `ssh root@<hackypi-ip-address>` 
-1. `vi /etc/opkg/opkg.conf` replace the Package Server URL with the IP address of your HackyPackages Server. This is only required once.
+1. `vi /etc/opkg/opkg.conf` replace the Package Server URL with the IP address of your Hacky Packages Server. This is only required once.
 1. `opkg update`
 1. `opkg install <challenge-name> &> /dev/null` and now you're ready to hack 🤖.
 1. `opkg remove --autoremove <challenge-name>` to remove the challenge from HackyPi
