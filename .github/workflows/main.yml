@@ -33,7 +33,7 @@ on:
 jobs:
   build-hackypi:
     if: ${{ github.event.inputs.enable_build_hackypi == 'true' || github.event.inputs.enable_build_hackypi == ''}}
-    runs-on: ${{ github.event.inputs.hackypi_build_runner }}
+    runs-on: ${{ github.event.inputs.hackypi_build_runner || 'ubuntu-22.04' }}
 
     steps:
       - name: Checkout
