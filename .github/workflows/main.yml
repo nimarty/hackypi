@@ -3,7 +3,6 @@
 name: Build
 
 on:
-
   push:
     branches:
       - master
@@ -15,12 +14,16 @@ on:
     inputs:
       enable_build_hackypi:
         type: boolean
-        description: 'Build HackyPi image and challenges'
+        description: 'Build HackyPi and HackyPackages Server'
         default: true
       enable_build_tools:
         type: boolean
-        description: 'Build additional tools'
+        description: 'Build additional Tools'
         default: true
+      hackypi_build_runner:
+        type: string
+        description: 'Runner to use to build HackyPi'
+        default: ubuntu-22.04
 
   pull_request:
     branches:
@@ -29,7 +32,7 @@ on:
 jobs:
   build-hackypi:
     if: ${{ github.event.inputs.enable_build_hackypi == 'true' || github.event.inputs.enable_build_hackypi == ''}}
-    runs-on: ubuntu-22.04
+    runs-on: ${{ github.event.inputs.hackypi_build_runner || 'ubuntu-22.04' }}
 
     steps:
       - name: Checkout
@@ -110,3 +113,35 @@ jobs:
           name: security-challenge-package
           path: |
             tools/relaxed-rachel/build/
+    
+  build-hackypackages-server:
+    runs-on: ubuntu-22.04
+    needs: build-hackypi
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: security-challenge-package
+          path: tools/opkg-server/src
+          
+      - name: Log in to ghcr
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: tools/opkg-server/src
+          push: true
+          tags: ghcr.io/nimarty/hackypackages-server:dev
+          build-args: PACKAGE_DIR=./ipk/cortexa7t2hf-neon-vfpv4
+
