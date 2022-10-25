@@ -22,7 +22,7 @@ on:
         default: true
       hackypi_build_runner:
         type: string
-        description: 'Runner to use for Build HackyPi job'
+        description: 'Runner to use to build HackyPi'
         default: ubuntu-22.04
 
   pull_request:
@@ -114,7 +114,7 @@ jobs:
           path: |
             tools/relaxed-rachel/build/
     
-  build-opkg-server-docker:
+  build-hackypackages-server:
     runs-on: ubuntu-22.04
     needs: build-hackypi
 
@@ -124,13 +124,11 @@ jobs:
         with:
           fetch-depth: 0
           
-      - name: download artifact
+      - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
           name: security-challenge-package
           path: tools/opkg-server/src
-          
-      - run: ls -al ${{ github.workspace }}/tools/opkg-server/src
           
       - name: Log in to ghcr
         uses: docker/login-action@v2
@@ -144,6 +142,6 @@ jobs:
         with:
           context: tools/opkg-server/src
           push: true
-          tags: ghcr.io/nimarty/opkg-server:latest
+          tags: ghcr.io/nimarty/hackypackages-server:dev
           build-args: PACKAGE_DIR=./ipk/cortexa7t2hf-neon-vfpv4
 
