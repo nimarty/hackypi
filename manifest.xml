@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="yoctoproject" fetch="git://git.yoctoproject.org/" />
+  <remote name="openembedded" fetch="git://git.openembedded.org/" />
+  
+
+  <!-- dunfell-23.0.20 -->
+  <project path="poky"
+           name="poky.git" remote="yoctoproject" />
+
+  <!-- 2081e1bb9a44025db7297bfd5d024977d42191ed -->
+  <project path="meta-raspberrypi"
+           name="meta-raspberrypi.git" remote="yoctoproject" />
+
+  <!-- 6792ebdd966aa0fb662989529193a0940fbfee00 -->
+  <project path="meta-openembedded"
+           name="meta-openembedded" remote="openembedded" />
+
+</manifest>
