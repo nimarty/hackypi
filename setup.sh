@@ -7,7 +7,7 @@ PROJECT_PATH="$PWD"
 sudo apt install -y -qq bc build-essential chrpath cpio diffstat gawk git texinfo wget python3-distutils chrpath diffstat repo || exit 1
 
 # checkout meta-layers
-repo init -q --depth 10 -m manifest.xml -b enhancement/define-yocto-releae https://github.com/nimarty/hackypi || exit 1
+repo init -q --depth 10 -m manifest.xml https://github.com/nimarty/hackypi || exit 1
 cp -rf manifest.xml .repo/ || exit 1 # overwrite with local manifest
 repo sync || exit 1
 
