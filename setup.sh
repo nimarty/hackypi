@@ -4,7 +4,7 @@
 PROJECT_PATH="$PWD"
 
 # install dependencies
-sudo apt install -y bc build-essential chrpath cpio diffstat gawk git texinfo wget python3-distutils chrpath diffstat
+sudo apt install -y -qq bc build-essential chrpath cpio diffstat gawk git texinfo wget python3-distutils chrpath diffstat repo || exit 1
 
 # checkout meta-layers
 #git clone --depth 10 git://git.yoctoproject.org/poky.git --branch dunfell --single-branch
@@ -22,18 +22,18 @@ sudo apt install -y bc build-essential chrpath cpio diffstat gawk git texinfo wg
 #git reset --hard 6792ebdd966aa0fb662989529193a0940fbfee00 || exit 1
 #popd
 
-repo init --depth 10 -m manifest.xml -b enhancement/define-yocto-releae https://github.com/nimarty/hackypi
-cp manifest.xml .repo/ # use local manifest
-repo sync
+repo init -q --depth 10 -m manifest.xml -b enhancement/define-yocto-releae https://github.com/nimarty/hackypi || exit 1
+cp -rf manifest.xml .repo/ || exit 1 # overwrite with local manifest
+repo sync -q || exit 1
 
 # init build
-source poky/oe-init-build-env
+source poky/oe-init-build-env &> /dev/null || exit 1
 
 # overwrite auto generated config with own config
-pushd $PROJECT_PATH
-cp -rf conf/local.conf build/conf/local.conf
-cp -rf conf/bblayers.conf build/conf/bblayers.conf
-popd
+pushd $PROJECT_PATH &> /dev/null
+cp -rf conf/local.conf build/conf/local.conf || exit 1
+cp -rf conf/bblayers.conf build/conf/bblayers.conf || exit 1
+popd &> /dev/null
 
 
 # build minimal image
