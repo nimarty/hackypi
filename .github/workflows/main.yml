@@ -25,13 +25,10 @@ on:
         description: 'Runner to use to build HackyPi'
         default: ubuntu-22.04
 
-  pull_request:
-    branches:
-      - master
-
 jobs:
   build-hackypi:
     if: ${{ github.event.inputs.enable_build_hackypi == 'true' || github.event.inputs.enable_build_hackypi == ''}}
+    name: Clean Build, Hacky Pi
     runs-on: ${{ github.event.inputs.hackypi_build_runner || 'ubuntu-22.04' }}
 
     steps:
@@ -131,6 +128,7 @@ jobs:
             
   build-tools:
     if: ${{ github.event.inputs.enable_build_tools == 'true' || github.event.inputs.enable_build_tools == '' }}
+    name: Clean Build, Tools
     runs-on: ubuntu-22.04
 
     steps:
@@ -153,6 +151,7 @@ jobs:
             tools/relaxed-rachel/build/
     
   build-hackypackages-server:
+    name: Clean Build, Hacky Packages Server
     runs-on: ubuntu-22.04
     needs: [ build-hackypi, build-challenges ]
 
