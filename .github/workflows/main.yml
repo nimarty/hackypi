@@ -23,7 +23,7 @@ on:
       hackypi_build_runner:
         type: string
         description: 'Runner to use to build HackyPi'
-        default: ubuntu-22.04
+        default: self-hosted
 
   pull_request:
     branches:
@@ -32,7 +32,7 @@ on:
 jobs:
   build-hackypi:
     if: ${{ github.event.inputs.enable_build_hackypi == 'true' || github.event.inputs.enable_build_hackypi == ''}}
-    runs-on: ${{ github.event.inputs.hackypi_build_runner || 'ubuntu-22.04' }}
+    runs-on: ${{ github.event.inputs.hackypi_build_runner || 'self-hosted' }}
 
     steps:
       - name: Checkout
@@ -42,6 +42,7 @@ jobs:
           clean: false
 
       - name: Cache Bitbake Output
+        if: ${{ github.event.inputs.hackypi_build_runner != 'self-hosted' }}
         id: cache-bitbake
         uses: actions/cache@v3
         with:
@@ -68,6 +69,7 @@ jobs:
           MACHINE=raspberrypi3 bitbake hackypi-image
 
       - name: Upload Artifacts
+        if: ${{ github.event.inputs.hackypi_build_runner != 'self-hosted' }}
         uses: actions/upload-artifact@v3.1.0
         with:
           name: security-challenge-package
@@ -131,7 +133,7 @@ jobs:
             !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-staticdev*.ipk
             
   build-tools:
-    if: ${{ github.event.inputs.enable_build_tools == 'true' || github.event.inputs.enable_build_tools == ''}}
+    if: ${{ (github.event.inputs.enable_build_tools == 'true' || github.event.inputs.enable_build_tools == '') && github.event.inputs.hackypi_build_runner != 'self-hosted' }}
     runs-on: ubuntu-22.04
 
     steps:
@@ -154,6 +156,7 @@ jobs:
             tools/relaxed-rachel/build/
     
   build-hackypackages-server:
+    if: ${{ github.event.inputs.hackypi_build_runner != 'self-hosted' }}
     runs-on: ubuntu-22.04
     needs: [ build-hackypi, build-challenges ]
 
