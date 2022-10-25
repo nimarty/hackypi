@@ -14,7 +14,8 @@ on:
       - master
 
 jobs:
-  build-hackypi:
+  incremental-build-hackypi:
+    name: Incremental Build, Hacky Pi
     runs-on: self-hosted
 
     steps:
@@ -51,7 +52,8 @@ jobs:
           bitbake moody-maggie
 
 
-  build-tools:
+  incremental-build-tools:
+    name: Incremental Build, Tools
     runs-on: self-hosted
 
     steps:
