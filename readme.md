@@ -32,6 +32,12 @@ This will automatically pull the docker image and launch the package server in t
 
 ### Configure package repo
 If the network is set up correctly, your Hacky Pi will get an IP address. Look it up on your DHCP server. To edit the opkg configuration you need to login via SSH as root.
+
+<details>
+  <summary>root password</summary>
+  cG#e*n&5!kB3
+</details>
+
 1. `ssh root@<HACKYPI_IP>` 
 1. `vi /etc/opkg/opkg.conf`
 1. Change the following line at the bottom of the file. Use the IP address and port of the system running the Hacky Packages Server
