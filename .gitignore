@@ -3,3 +3,4 @@ build/
 meta-openembedded/
 meta-raspberrypi/
 poky/
+.repo/
