@@ -1,0 +1,68 @@
+# Build and upload artifacts
+
+name: Checks
+
+on:
+  push:
+    branches:
+      - master
+
+  workflow_dispatch:
+
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-hackypi:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          clean: false
+
+      - name: Setup Environment
+        shell: bash
+        run: |
+          bash setup.sh
+
+      - name: Bitbake HackyPi Image - Raspberry Pi 4
+        shell: bash
+        run: |
+          source poky/oe-init-build-env &>/dev/null
+          bitbake hackypi-image
+
+      - name: Bitbake HackyPi Image - Raspberry Pi 3
+        shell: bash
+        run: |
+          source poky/oe-init-build-env &>/dev/null
+          MACHINE=raspberrypi3 bitbake hackypi-image
+
+      - name: Bitbake HackyPi Challenges
+        shell: bash
+        run: |
+          source poky/oe-init-build-env &>/dev/null
+          bitbake chatty-charly
+          bitbake relaxed-rachel
+          bitbake deceived-donald
+          bitbake moody-maggie
+
+
+  build-tools:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          clean: false
+
+      - name: Build Relaxed-Rachel FTP Client
+        shell: bash
+        run: |
+          cd tools/relaxed-rachel
+          make all
