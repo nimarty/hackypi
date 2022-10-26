@@ -64,13 +64,13 @@ void logged_in() {
 }
 
 int main() {
+  setuid(0);
+
   char expected_pin[5];
-  FILE *f = fopen("/etc/hhcli", "r");
+  FILE *f = fopen("/etc/hems", "r");
   fread(expected_pin, 4, 1, f);
   expected_pin[4] = 0;
   fclose(f);
-
-  setuid(0);
 
   cout << "HEMS (Home Energy Management System) Service interface\n";
   cout << "======================================================\n";
@@ -96,6 +96,6 @@ int main() {
 }
 
 void unused() {
-  char* const x[] = {"cat", "/etc/flag", 0};
+  char *const x[] = {"cat", "/etc/flag", 0};
   execv("/bin/busybox", x);
 }
