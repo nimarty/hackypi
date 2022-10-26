@@ -9,12 +9,12 @@ Hacky Pi is a plattform to solve security challenges and train your cybersecurit
 > ℹ️ Hacky Pi is not some kind of device which allows you to attack other systems. It is a training platform.
 
 # Getting Started
-You will need a Host System to run the Hacky Packages Server (OPKG Server) and to attack Hacky Pi. Hacky Pi needs a network connection in order to work. It is suggested to connect Hacky Pi and the host in an isolated network to prevent accidentally hacking the environment. 
+You will need a host system to run the Hacky Packages Server (OPKG Server) and to attack Hacky Pi. Hacky Pi needs a network connection in order to work. It is suggested to connect Hacky Pi and the host in an isolated network to prevent accidentally hacking the environment. 
 
 <img src="res/hackypi_deployment.png" width="600">
 
 ## Setup Hacky Packages Server
-To install and start the server you need a Linux Host with Docker. Windows is not currently supported.
+To install and start the server you need a Linux host with docker. Windows is not currently supported.
 1. `docker run -d -p 8080:80 ghcr.io/nimarty/opkg-server:latest`
 
 This will automatically pull the docker image and launch the package server in the background.
@@ -22,7 +22,7 @@ This will automatically pull the docker image and launch the package server in t
 ## Setup Hacky Pi
 ### Write image to SD card
 1. Download the latest release package from this repo
-1. Take `<xxx>.rpi-sdimg` from `images/raspberrypi4/` or `images/raspberrypi4/` and write it to an SD card.
+1. Take `<xxx>.rpi-sdimg` from `images/raspberrypi4/` or `images/raspberrypi3/` and write it to an SD card.
     1. Under Linux: `sudo fdisk -l | grep /dev/sd` to determine device.
     1. Under Linux: `sudo dd if=<xxx>.rpi-sdimg of=/dev/sd<x> bs=4M` to write image on device.
     1. or under Windows, use Rufus or Win32DiskImager to write the image to an SD Card
@@ -47,7 +47,7 @@ src/gz hackypackages http://<SERVER_URL>:<PORT>
 4. `opkg update`
 
 ## Solve Security Challenges 🤖
-In order to install challenges, connect via SSH to Hacky Pi. To install packages you need to login via SSH as root.
+In order to install challenges, connect via SSH to Hacky Pi. Login as root.
 
 > ℹ️ It's not the idea to use the root user to directly solve a security challenge. This is no fun. Follow the challenge description for the best experience.
 
