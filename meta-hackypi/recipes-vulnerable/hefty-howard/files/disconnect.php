@@ -1,5 +1,6 @@
 <?php 
-if ($_GET["code"] == '3456') {
+$pin = chop(file_get_contents("/etc/hems"));
+if ($_GET["code"] == $pin) {              
     header("Location: /disconnected.php");
     die();
 }
