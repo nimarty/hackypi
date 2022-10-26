@@ -32,7 +32,7 @@ pkg_postinst_${PN} () {
     # Set the PIN for the HEMS tools
     echo 3455 > /etc/hems
     chmod 640 /etc/hems
-    chown www-data:www-data /etc/hems
+    chown nobody:nogroup /etc/hems
 
     # Set the flag to be read by the exploit
     echo 4711 > /etc/flag
