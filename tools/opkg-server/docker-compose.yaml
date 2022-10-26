@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   opkg-server-external-packages:
-    image: ghcr.io/nimarty/opkg-server:${VERSION_TAG}
+    image: ghcr.io/nimarty/hackypackages-server:${VERSION_TAG}
     volumes:
       - ${PACKAGE_DIR}:/packages
     ports:
@@ -10,7 +10,7 @@ services:
     profiles:
       - external
   opkg-server-internal-packages:
-    image: ghcr.io/nimarty/opkg-server:${VERSION_TAG}
+    image: ghcr.io/nimarty/hackypackages-server:${VERSION_TAG}
     ports:
       - ${PORT}:80
     restart: always

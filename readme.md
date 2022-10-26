@@ -15,7 +15,9 @@ You will need a host system to run the Hacky Packages Server (OPKG Server) and t
 
 ## Setup Hacky Packages Server
 To install and start the server you need a Linux host with docker. Windows is not currently supported.
-1. `docker run -d -p 8080:80 ghcr.io/nimarty/opkg-server:latest`
+1. `git clone https://github.com/nimarty/hackypi.git`
+1. `cd hackypi/tools/opkg-server` change to the directory with the docker compose file
+1. `docker-compose up -d`
 
 This will automatically pull the docker image and launch the package server in the background.
 
