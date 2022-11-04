@@ -15,9 +15,8 @@ You will need a host system to run the Hacky Packages Server (OPKG Server) and t
 
 ## Setup Hacky Packages Server
 To install and start the server you need a Linux host with docker. Windows is not currently supported.
-1. `git clone https://github.com/nimarty/hackypi.git`
-1. `cd hackypi/tools/opkg-server` change to the directory with the docker compose file
-1. `docker-compose up -d`
+
+`docker run --rm -p 8080:80 -d ghcr.io/nimarty/hackypackages-server:latest`
 
 This will automatically pull the docker image and launch the package server in the background.
 
@@ -59,15 +58,22 @@ In order to install challenges, connect via SSH to Hacky Pi. Login as root.
 
 A list of all available challenges with details can be found here: <https://github.com/nimarty/hackypi-handout>
 
-> :warning: The idea is to install one challenge at once. Installing more than one challenge at once can lead to errors.
+> :warning: Install only one challenge at once. Installing more than one challenge at once can lead to errors.
 
-# Build
+# Development
+## Build
 Following steps have been tested on Ubuntu 20.04 LTS. When using a virtual machine, make sure to have at least 2 CPUs and 50 GB disk space at your disposal. Anyways, the first BitBake build takes a while.
 1. `git clone https://github.com/nimarty/hackypi.git`
 1. `cd hackypi`
 1. `./setup.sh`
 1. `source poky/oe-init-build-env`
 1. `bitbake hackypi-image`
+
+## Run Hacky Packages Dev Server
+It's possible to start the server in a development mode. In development mode it loads packages from the build directory and the package list is updated periodically. See `.env` file for details. 
+1. `git clone https://github.com/nimarty/hackypi.git`
+1. `cd hackypi/tools/opkg-server` change to the directory with the docker compose file
+1. `docker-compose up -d`
 
 # Contribute
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](.github/CODE_OF_CONDUCT.md)
