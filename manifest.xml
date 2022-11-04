@@ -6,11 +6,11 @@
           fetch="git://git.yoctoproject.org/" />
   <project name="poky"
            remote="yoctoproject" 
-           revision="7f9b7f912e13451a4cd03b10a8090a5def68dc39"
+           revision="d64bef1c7d713b92a51228e5ade945835e5a94a4"
            path="poky"/>
   <project name="meta-raspberrypi"
            remote="yoctoproject"
-           revision="2081e1bb9a44025db7297bfd5d024977d42191ed"
+           revision="dacad9302a92b0b7edf8546cdcad1f8ef753e462"
            path="meta-raspberrypi" />
   
   <!-- OpenEmbedded -->
@@ -18,7 +18,7 @@
           fetch="git://git.openembedded.org/" />
   <project name="meta-openembedded"
            remote="openembedded"
-           revision="6792ebdd966aa0fb662989529193a0940fbfee00"
+           revision="744a4b6eda88b9a9ca1cf0df6e18be384d9054e3"
            path="meta-openembedded" />
 
 </manifest>
