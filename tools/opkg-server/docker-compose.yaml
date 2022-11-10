@@ -4,6 +4,8 @@ services:
     image: ghcr.io/nimarty/hackypackages-server:${VERSION_TAG}
     volumes:
       - ${PACKAGE_DIR}:/packages
+    command: 
+      - develop
     ports:
       - ${PORT}:80
     restart: always
