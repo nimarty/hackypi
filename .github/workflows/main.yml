@@ -73,6 +73,14 @@ jobs:
           path: |
             build/tmp/deploy/images/raspberrypi4/hackypi-image-raspberrypi4-*.rpi-sdimg
             build/tmp/deploy/images/raspberrypi3/hackypi-image-raspberrypi3-*.rpi-sdimg
+            build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*.ipk
+            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-dbg*.ipk
+            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-src*.ipk
+            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-doc*.ipk
+            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-dev*.ipk
+            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-ptest*.ipk
+            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-syslog*.ipk
+            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-staticdev*.ipk
   
   build-challenges:
     if: ${{ github.event.inputs.enable_build_hackypi == 'true' || github.event.inputs.enable_build_hackypi == ''}}
@@ -146,7 +154,7 @@ jobs:
     
   build-hackypackages-server:
     runs-on: ubuntu-22.04
-    needs: [ build-challenges ]
+    needs: [ build-hackypi, build-challenges ]
 
     steps:
       - name: Checkout
