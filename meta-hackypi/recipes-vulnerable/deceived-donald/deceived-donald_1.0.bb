@@ -1,31 +1,28 @@
 LICENSE = "CLOSED"
 LIC_FILES_CHKSUM = ""
 
-inherit pkgconfig update-rc.d cmake
+inherit pkgconfig systemd cmake
 
 SRC_URI = " \
-    file://memlog \
+    file://memlog.service \
     file://src/ \
     "
 
 S = "${WORKDIR}/src"
 
-INITSCRIPT_PARAMS = "start 02 2 3 4 5 . stop 01 0 1 6 ."
-INITSCRIPT_NAME = "memlog"
-
 do_install () {
     # install application
     cmake_do_install
 
-    # install init.d service
-    install -d ${D}${base_prefix}${sysconfdir}/init.d/
-    install -m 0755 ${WORKDIR}/memlog ${D}${base_prefix}${sysconfdir}/init.d/
+    # install systemd service
+    install -d ${D}/${systemd_unitdir}/system
+    install -m 0755 ${WORKDIR}/memlog.service ${D}/${systemd_unitdir}/system
 
     # modify access rights to lib
     chmod 777 ${D}${base_prefix}/usr/lib/libmemfunctions.so.1.0.0
 }
 
-pkg_postinst_${PN} () {
+pkg_postinst:${PN} () {
     #password is "hacky", created with command "openssl passwd"
     useradd -p '$1$IebNOasl$pmPilB8C2b3wuax1tkha7/' donald
     printf 'It does not matter how slowly you go so long as you do not stop.\n - Confucius\n' > /home/donald/treasure
@@ -33,21 +30,27 @@ pkg_postinst_${PN} () {
     chmod 600 /home/donald/treasure
     echo 'AllowUsers donald' >> /etc/ssh/sshd_config
     /etc/init.d/sshd restart
+    systemctl daemon-reload
+    systemctl start memlog
 }
 
-pkg_postrm_${PN} () {
+pkg_postrm:${PN} () {
     userdel -f donald
     rm -rf /home/donald
     sed -i '/AllowUsers donald/d' /etc/ssh/sshd_config
     /etc/init.d/sshd restart
+    systemctl daemon-reload
+    systemctl stop memlog
+    rm -f /lib/systemd/system/memlog.service
+    systemctl daemon-reload
 }
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
     ldd \
     "
 
-FILES_${PN} = " \
+FILES:${PN} = " \
     ${base_prefix}/usr/bin/* \
     ${base_prefix}/usr/lib/* \
-    ${base_prefix}${sysconfdir}/init.d/* \
+    ${systemd_unitdir}/system/* \
     "

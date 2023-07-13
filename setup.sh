@@ -4,7 +4,7 @@
 PROJECT_PATH="$PWD"
 
 # install dependencies
-sudo apt install -y -qq bc build-essential chrpath cpio diffstat gawk git texinfo wget python3-distutils chrpath diffstat repo || exit 1
+sudo apt install -y -qq file zstd lz4 bc build-essential chrpath cpio diffstat gawk git texinfo wget python3-distutils chrpath diffstat repo || exit 1
 
 # checkout meta-layers
 repo init -q --depth 10 -m manifest.xml https://github.com/nimarty/hackypi || exit 1

@@ -3,14 +3,14 @@ DESCRIPTION = "Expands root filesystem to available space on SD card"
 LICENSE = "CLOSED"
 LIC_FILES_CHKSUM = ""
 
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
     e2fsprogs-resize2fs \
     parted \
     "
 
-pkg_postinst_ontarget_${PN}() {
+pkg_postinst_ontarget:${PN}() {
     #!/bin/sh
     {
         # delete 2nd partition
@@ -21,7 +21,7 @@ pkg_postinst_ontarget_${PN}() {
         echo "n";
         echo "p";
         echo "2";
-        echo "90112"; # start block after boot partition
+        echo "106496"; # start block after boot partition
         echo ""; # last available block by default
 
         echo "w"; # write new table

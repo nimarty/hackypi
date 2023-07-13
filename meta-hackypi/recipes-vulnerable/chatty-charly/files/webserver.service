@@ -1,0 +1,14 @@
+[Unit]
+Description=Webserver
+After=network.target
+
+[Service]
+Type=simple
+User=webserveruser
+ExecStart=/usr/bin/python3 /opt/webserver/webserver.py
+PIDFile=/var/run/webserverapp.pid
+ExecStop=/bin/kill -9 $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

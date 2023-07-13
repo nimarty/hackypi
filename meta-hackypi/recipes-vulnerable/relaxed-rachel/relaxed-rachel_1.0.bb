@@ -3,25 +3,23 @@ DESCRIPTION = "Package installing a simple FTP server"
 LICENSE = "CLOSED"
 LIC_FILES_CHKSUM = ""
 
-inherit pkgconfig update-rc.d
+inherit pkgconfig systemd
 
-SRC_URI = " \
-    file://ftpserver \
+SRC_URI = " \
+    file://ftpserver.service \
     "
 
-INITSCRIPT_NAME = "ftpserver"
-# INITSCRIPT_PARAMS = ""
-
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
     pure-ftpd \
     "
 
 do_install() {
-    install -d ${D}${base_prefix}${sysconfdir}/init.d/
-    install -m 0755 ${WORKDIR}/ftpserver ${D}${base_prefix}${sysconfdir}/init.d/
+    # install systemd service
+    install -d ${D}/${systemd_unitdir}/system
+    install -m 0755 ${WORKDIR}/ftpserver.service ${D}/${systemd_unitdir}/system
 }
 
-pkg_postinst_${PN}() {
+pkg_postinst:${PN}() {
     # add new user and its files
     groupadd ftp
     useradd -p "\$6\$bfnJZ/LB\$6kMYSmH0qtx6ZJ6sR4cRBdjDNEOcf9X1ebF2kL6jM2KQusayRNcCXhNbYrio.LFYGUXIpA4n4TqpZPhc3PyVw1" \
@@ -32,14 +30,20 @@ pkg_postinst_${PN}() {
     chown -R rachel:ftp /home/rachel/
     chmod 660 /home/rachel/file.txt
     chmod 400 /home/rachel/treasure/secret
+    systemctl daemon-reload
+    systemctl start ftpserver
 }
 
-pkg_postrm_${PN}() {
+pkg_postrm:${PN}() {
     # remove user and its files
     userdel -fr rachel
     groupdel -f ftp
+    systemctl daemon-reload
+    systemctl stop ftpserver
+    rm -f /lib/systemd/system/ftpserver.service
+    systemctl daemon-reload
 }
 
-FILES_${PN} = " \
-    ${base_prefix}${sysconfdir}/init.d/* \
+FILES:${PN} = " \
+    ${systemd_unitdir}/system/* \
     "
