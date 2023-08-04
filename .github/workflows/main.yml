@@ -28,11 +28,15 @@ on:
   pull_request:
     branches:
       - master
+      
+env:
+  DEFAULT_RUNNER: self-hosted
+  SECONDARY_RUNNER: ubuntu-22.04
 
 jobs:
   build-hackypi:
     if: ${{ github.event.inputs.enable_build_hackypi == 'true' || github.event.inputs.enable_build_hackypi == ''}}
-    runs-on: ${{ github.event.inputs.hackypi_build_runner}}
+    runs-on: ${{ github.event.inputs.hackypi_build_runner || '$DEFAULT_RUNNER' }}
 
     steps:
       - name: Checkout
@@ -84,7 +88,7 @@ jobs:
   
   build-challenges:
     if: ${{ github.event.inputs.enable_build_hackypi == 'true' || github.event.inputs.enable_build_hackypi == ''}}
-    runs-on: ${{ github.event.inputs.hackypi_build_runner}}
+    runs-on: ${{ github.event.inputs.hackypi_build_runner || '$DEFAULT_RUNNER' }}
 
     steps:
       - name: Checkout
@@ -131,7 +135,7 @@ jobs:
             
   build-tools:
     if: ${{ github.event.inputs.enable_build_tools == 'true' || github.event.inputs.enable_build_tools == ''}}
-    runs-on: ${{ github.event.inputs.hackypi_build_runner}}
+    runs-on: $SECONDARY_RUNNER
 
     steps:
       - name: Checkout
@@ -153,7 +157,7 @@ jobs:
             tools/relaxed-rachel/build/
     
   build-hackypackages-server:
-    runs-on: ubuntu-22.04
+    runs-on: $SECONDARY_RUNNER
     needs: [ build-hackypi, build-challenges ]
 
     steps:
