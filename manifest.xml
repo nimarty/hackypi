@@ -6,7 +6,7 @@
           fetch="git://git.yoctoproject.org/" />
   <project name="poky"
            remote="yoctoproject"
-           revision="84dd3d0e6c90656f2a7105aabd303a62fa49eeba"
+           revision="fc697fe87412b9b179ae3a68d266ace85bb1fcc6"
            path="poky"/>
   <project name="meta-raspberrypi"
            remote="yoctoproject"
