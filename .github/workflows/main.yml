@@ -23,7 +23,11 @@ on:
       hackypi_build_runner:
         type: string
         description: 'Runner to use to build HackyPi'
-        default: ubuntu-22.04
+        default: self-hosted
+      clean_build:
+        type: boolean
+        description: 'Perform clean build'
+        default: false
 
   pull_request:
     branches:
@@ -32,27 +36,28 @@ on:
 jobs:
   build-hackypi:
     if: ${{ github.event.inputs.enable_build_hackypi == 'true' || github.event.inputs.enable_build_hackypi == ''}}
-    runs-on: ${{ github.event.inputs.hackypi_build_runner || 'ubuntu-22.04' }}
+    runs-on: ${{ github.event.inputs.hackypi_build_runner || 'self-hosted' }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: Cache Bitbake Output
-        id: cache-bitbake
-        uses: actions/cache@v3
-        with:
-          path: build/downloads
-          key: ${{ runner.os }}-bitbake-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-bitbake-
+          clean: ${{ github.event.inputs.clean_build || false }}
 
       - name: Setup Environment
         shell: bash
         run: |
           bash setup.sh
+
+      - name: Bitbake HackyPi Challenges
+        shell: bash
+        run: |
+          source poky/oe-init-build-env &>/dev/null
+          bitbake chatty-charly
+          bitbake relaxed-rachel
+          bitbake deceived-donald
+          bitbake moody-maggie
 
       - name: Bitbake HackyPi Image - Raspberry Pi 4
         shell: bash
@@ -82,53 +87,6 @@ jobs:
             !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-syslog*.ipk
             !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-staticdev*.ipk
   
-  build-challenges:
-    if: ${{ github.event.inputs.enable_build_hackypi == 'true' || github.event.inputs.enable_build_hackypi == ''}}
-    runs-on: ${{ github.event.inputs.hackypi_build_runner || 'ubuntu-22.04' }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Cache Bitbake Output
-        id: cache-bitbake
-        uses: actions/cache@v3
-        with:
-          path: build/downloads
-          key: ${{ runner.os }}-bitbake-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-bitbake-
-
-      - name: Setup Environment
-        shell: bash
-        run: |
-          bash setup.sh
-
-      - name: Bitbake HackyPi Challenges
-        shell: bash
-        run: |
-          source poky/oe-init-build-env &>/dev/null
-          bitbake chatty-charly
-          bitbake relaxed-rachel
-          bitbake deceived-donald
-          bitbake moody-maggie
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v3.1.0
-        with:
-          name: security-challenge-package
-          path: |
-            build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-dbg*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-src*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-doc*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-dev*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-ptest*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-syslog*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-staticdev*.ipk
-            
   build-tools:
     if: ${{ github.event.inputs.enable_build_tools == 'true' || github.event.inputs.enable_build_tools == ''}}
     runs-on: ubuntu-22.04
@@ -154,7 +112,7 @@ jobs:
     
   build-hackypackages-server:
     runs-on: ubuntu-22.04
-    needs: [ build-hackypi, build-challenges ]
+    needs: [ build-hackypi ]
 
     steps:
       - name: Checkout
