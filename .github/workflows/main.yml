@@ -45,15 +45,6 @@ jobs:
           fetch-depth: 0
           clean: ${{ github.event.inputs.clean_build || false }}
 
-      - name: Cache Bitbake Output
-        id: cache-bitbake
-        uses: actions/cache@v3
-        with:
-          path: build/downloads
-          key: ${{ runner.os }}-bitbake-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-bitbake-
-
       - name: Setup Environment
         shell: bash
         run: |
@@ -97,15 +88,6 @@ jobs:
         with:
           fetch-depth: 0
           clean: ${{ github.event.inputs.clean_build || false }}
-
-      - name: Cache Bitbake Output
-        id: cache-bitbake
-        uses: actions/cache@v3
-        with:
-          path: build/downloads
-          key: ${{ runner.os }}-bitbake-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-bitbake-
 
       - name: Setup Environment
         shell: bash
