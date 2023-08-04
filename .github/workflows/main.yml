@@ -24,6 +24,10 @@ on:
         type: string
         description: 'Runner to use to build HackyPi'
         default: self-hosted
+      clean_build:
+        type: boolean
+        description: 'Perform clean build'
+        default: false
 
   pull_request:
     branches:
@@ -39,6 +43,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          clean: ${{ github.event.inputs.clean_build || false }}
 
       - name: Cache Bitbake Output
         id: cache-bitbake
@@ -91,6 +96,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          clean: ${{ github.event.inputs.clean_build || false }}
 
       - name: Cache Bitbake Output
         id: cache-bitbake
