@@ -1,0 +1,19 @@
+#!/usr/bin/expect -f
+
+set timeout 55
+
+spawn bluetoothctl
+
+expect {
+    -re "Authorize service .*" {
+        send "yes\r"
+    } timeout {
+        puts "Timeout while waiting for service authorization prompt"
+        exit 1
+    }
+}
+
+expect "#"
+send "quit\r"
+
+expect eof

@@ -1,0 +1,19 @@
+#!/usr/bin/expect -f
+
+set timeout 55
+
+spawn bluetoothctl
+
+expect {
+    "Confirm passkey " {
+        send "yes\r"
+    } timeout {
+        puts "Timeout while waiting for PIN code prompt"
+        exit 1
+    }
+}
+
+expect "#"
+send "quit\r"
+
+expect eof

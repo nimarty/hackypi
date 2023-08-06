@@ -60,6 +60,7 @@ jobs:
           bitbake moody-maggie
           bitbake raging-rachel
           bitbake hefty-howard
+          bitbake tearful-tanja
 
       - name: Bitbake HackyPi Image - Raspberry Pi 4
         shell: bash
@@ -149,12 +150,29 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Check workflow event
+        id: checkEvent
+        shell: bash
+        run: |
+          # this check is to prevent the following error message when pushing a docker image in a github action
+          # "Error: buildx failed with: ERROR: denied: installation not allowed to Write organization package"
+          if [ "${{ github.event_name == 'pull_request' }}" = true ]; then
+            if [ "${{ github.event.pull_request.head.repo.full_name == 'nimarty/hackypi' }}" = true ]; then
+              echo "doPush=true" >> $GITHUB_OUTPUT
+            else
+              echo "::warning:: pull request from forked repo detected, docker image will not be pushed to container registry"
+              echo "doPush=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "doPush=true" >> $GITHUB_OUTPUT
+          fi
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: tools/opkg-server/src
-          push: true
+          push: ${{ steps.checkEvent.outputs.doPush }}
           tags: ghcr.io/nimarty/hackypackages-server:dev
           build-args: PACKAGE_DIR=./ipk/cortexa7t2hf-neon-vfpv4
 
