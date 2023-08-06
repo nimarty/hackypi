@@ -13,7 +13,7 @@ inherit cmake pkgconfig
 
 EXTRA_OECMAKE = ""
 
-pkg_postinst_${PN} () {
+pkg_postinst:${PN} () {
     # Add new user with name 'service'
     useradd -p "\$6\$HUpwgjNWFh9bIDK\$DYpDI7MWK9Rf2fWKzMQzYieqGJWrTDWnOLr.zRpOkhwbpxycIRjy/G5NNnwhZOjxZsw7Wd2KYOj7.hdDKpqPG0" service
 
@@ -39,7 +39,7 @@ pkg_postinst_${PN} () {
     chmod 640 /etc/flag
 }
 
-pkg_postrm_${PN} () {
+pkg_postrm:${PN} () {
     rm /etc/flag
 
     rm /etc/hems
@@ -53,6 +53,6 @@ pkg_postrm_${PN} () {
     userdel -r service
 }
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
     gdb \
     "
