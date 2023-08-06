@@ -168,11 +168,20 @@ jobs:
             echo "doPush=true" >> $GITHUB_OUTPUT
           fi
 
+      - name: Prepare packages
+        shell: bash
+        run: |
+          # move packages to flat directory
+          cd tools/opkg-server/src
+          rm -rf packages
+          mkdir packages
+          mv ipk/*/*.ipk packages/
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: tools/opkg-server/src
           push: ${{ steps.checkEvent.outputs.doPush }}
           tags: ghcr.io/nimarty/hackypackages-server:dev
-          build-args: PACKAGE_DIR=./ipk/cortexa7t2hf-neon-vfpv4
+          build-args: PACKAGE_DIR=./packages
 
