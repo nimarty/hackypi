@@ -97,6 +97,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Build Relaxed-Rachel FTP Client
         shell: bash
         run: |
@@ -104,11 +110,7 @@ jobs:
           make all
 
       - name: Build Raging-Rachel SFTP Client
-        uses: actions/setup-java@v3
         shell: bash
-        with:
-          distribution: 'temurin'
-          java-version: '17'
         run: |
           cd tools/raging-rachel
           jar -xvf jsch-0.1.55.jar
@@ -122,7 +124,7 @@ jobs:
           path: |
             tools/relaxed-rachel/build/
             tools/raging-rachel/SftpClient.jar
-    
+
   build-hackypackages-server:
     runs-on: ubuntu-22.04
     needs: [ build-hackypi ]
@@ -132,13 +134,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          
+
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
           name: security-challenge-package
           path: tools/opkg-server/src
-          
+
       - name: Log in to ghcr
         uses: docker/login-action@v2
         with:
