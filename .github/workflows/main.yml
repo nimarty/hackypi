@@ -155,6 +155,8 @@ jobs:
         id: checkEvent
         shell: bash
         run: |
+          # this check is to prevent the following error message when pushing a docker image in a github action
+          # "Error: buildx failed with: ERROR: denied: installation not allowed to Write organization package"
           if [ "${{ github.event_name == 'pull_request' }}" = true ]; then
             if [ "${{ github.event.pull_request.head.repo.full_name == 'nimarty/hackypi' }}" = true ]; then
               echo "doPush=true" >> $GITHUB_OUTPUT
