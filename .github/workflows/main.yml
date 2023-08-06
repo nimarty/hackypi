@@ -59,6 +59,7 @@ jobs:
           bitbake deceived-donald
           bitbake moody-maggie
           bitbake raging-rachel
+          bitbake hefty-howard
 
       - name: Bitbake HackyPi Image - Raspberry Pi 4
         shell: bash
