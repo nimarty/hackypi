@@ -1,0 +1,15 @@
+[Unit]
+Description=Memlog
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/memlog c 30000
+StandardOutput=file:/var/log/memlog.log
+PIDFile=/var/run/memlog.pid
+ExecStop=/bin/kill -9 $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

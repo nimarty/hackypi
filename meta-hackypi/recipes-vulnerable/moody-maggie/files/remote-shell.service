@@ -1,0 +1,11 @@
+[Unit]
+Description=Create a bind shell restricted to localhost
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/moody-maggie
+ExecStop=/usr/bin/killall moody-maggie
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

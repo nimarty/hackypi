@@ -1,4 +1,5 @@
 .vscode/
+.idea/
 build/
 meta-openembedded/
 meta-raspberrypi/

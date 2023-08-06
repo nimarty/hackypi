@@ -22,7 +22,7 @@ class Logs(Resource):
     def get(self):
         headers = {'Content-Type': 'text/plain'}
         parser = reqparse.RequestParser()
-        parser.add_argument('filepath', type=str, required=True,
+        parser.add_argument('filepath', type=str, required=True, location='args', 
             help="filepath cannot be blank!")
         params = parser.parse_args()
         command = ['cat', params['filepath']]

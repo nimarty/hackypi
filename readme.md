@@ -2,7 +2,7 @@
 ![Build Workflow](https://github.com/nimarty/hackypi/actions/workflows/main.yml/badge.svg)
 ![License](https://img.shields.io/github/license/nimarty/hackypi)
 ![Release](https://img.shields.io/github/v/release/nimarty/hackypi)
-![poky](https://img.shields.io/badge/poky-dunfell%2023.0.20-informational?logo=linux)
+![poky](https://img.shields.io/badge/poky-kirkstone%204.0.11-informational?logo=linux)
 
 Hacky Pi is a plattform to solve security challenges and train your cybersecurity skills. Because Hacky Pi is based on a Raspberry Pi, it offers a new dimension for security challenges to address problems found specifically in embedded devices. To solve a challenge it may be required to use an insecure serial connection or do some hardware manipulation... Find it out! 
 

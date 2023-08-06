@@ -1,27 +1,24 @@
 LICENSE = "CLOSED"
 LIC_FILES_CHKSUM = ""
 
-inherit pkgconfig update-rc.d
+inherit pkgconfig systemd
 
 SRC_URI = " \
     file://webserver.py \
-    file://webserver \
+    file://webserver.service \
     "
-
-INITSCRIPT_PARAMS = "start 02 2 3 4 5 . stop 01 0 1 6 ."
-INITSCRIPT_NAME = "webserver"
 
 do_install () {
     # install application
     install -d ${D}${base_prefix}/opt/webserver/
     install -m 0755 ${WORKDIR}/webserver.py ${D}${base_prefix}/opt/webserver/
 
-    # install init.d service
-    install -d ${D}${base_prefix}${sysconfdir}/init.d/
-    install -m 0755 ${WORKDIR}/webserver ${D}${base_prefix}${sysconfdir}/init.d/
+    # install systemd service
+    install -d ${D}/${systemd_unitdir}/system
+    install -m 0644 ${WORKDIR}/webserver.service ${D}/${systemd_unitdir}/system
 }
 
-pkg_postinst_${PN} () {
+pkg_postinst:${PN} () {
     useradd webserveruser
     chmod a+r /etc/shadow
     useradd -p \$1\$5sGNjVOx\$uUu/JAD6cZx/gcMoHt5bb. hacky
@@ -30,9 +27,11 @@ pkg_postinst_${PN} () {
     chmod 600 /home/hacky/treasure
     echo 'AllowUsers hacky' >> /etc/ssh/sshd_config
     /etc/init.d/sshd restart
+    systemctl daemon-reload
+    systemctl start webserver
 }
 
-pkg_postrm_${PN} () {
+pkg_postrm:${PN} () {
     chmod 400 /etc/shadow
     userdel -f webserveruser
     rm -rf /home/webserveruser
@@ -40,15 +39,19 @@ pkg_postrm_${PN} () {
     rm -rf /home/hacky
     sed -i '/AllowUsers hacky/d' /etc/ssh/sshd_config
     /etc/init.d/sshd restart
+    systemctl daemon-reload
+    systemctl stop webserver
+    rm -f /lib/systemd/system/webserver.service
+    systemctl daemon-reload
 }
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
     python3-flask \
     python3-flask-restful \
     python3-six \
     "
 
-FILES_${PN} = " \
+FILES:${PN} = " \
     ${base_prefix}/opt/* \
-    ${base_prefix}${sysconfdir}/init.d/* \
+    ${systemd_unitdir}/system/* \
     "

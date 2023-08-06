@@ -1,0 +1,13 @@
+[Unit]
+Description=Simple FTP server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/pure-ftpd
+ExecStop=/usr/bin/killall pure-ftpd
+PIDFile=/var/run/pure-ftpd.pid
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
