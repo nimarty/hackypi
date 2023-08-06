@@ -52,6 +52,6 @@ RDEPENDS:${PN} = " \
     "
 
 FILES:${PN} = " \
-    ${base_prefix}/opt/* \
+    ${base_prefix}/opt/webserver/* \
     ${systemd_unitdir}/system/* \
     "
