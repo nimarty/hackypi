@@ -81,14 +81,14 @@ jobs:
           path: |
             build/tmp/deploy/images/raspberrypi4/hackypi-image-raspberrypi4-*.rpi-sdimg
             build/tmp/deploy/images/raspberrypi3/hackypi-image-raspberrypi3-*.rpi-sdimg
-            build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-dbg*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-src*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-doc*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-dev*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-ptest*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-syslog*.ipk
-            !build/tmp/deploy/ipk/cortexa7t2hf-neon-vfpv4/*-staticdev*.ipk
+            build/tmp/deploy/ipk/cortexa7*-neon-vfpv4/*.ipk
+            !build/tmp/deploy/ipk/cortexa7*-neon-vfpv4/*-dbg*.ipk
+            !build/tmp/deploy/ipk/cortexa7*-neon-vfpv4/*-src*.ipk
+            !build/tmp/deploy/ipk/cortexa7*-neon-vfpv4/*-doc*.ipk
+            !build/tmp/deploy/ipk/cortexa7*-neon-vfpv4/*-dev*.ipk
+            !build/tmp/deploy/ipk/cortexa7*-neon-vfpv4/*-ptest*.ipk
+            !build/tmp/deploy/ipk/cortexa7*-neon-vfpv4/*-syslog*.ipk
+            !build/tmp/deploy/ipk/cortexa7*-neon-vfpv4/*-staticdev*.ipk
   
   build-tools:
     if: ${{ github.event.inputs.enable_build_tools == 'true' || github.event.inputs.enable_build_tools == ''}}
